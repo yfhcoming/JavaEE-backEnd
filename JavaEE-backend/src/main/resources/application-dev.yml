@@ -1,6 +1,6 @@
 
-logging:
-  config: classpath:logback-dev.xml
+#logging:
+#  config: classpath:logback-dev.xml
 
 # DataSource Config
 spring:
