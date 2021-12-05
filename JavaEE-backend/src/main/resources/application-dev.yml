@@ -1,4 +1,7 @@
 
+logging:
+  config: classpath:logback-dev.xml
+
 # DataSource Config
 spring:
   datasource:
@@ -6,7 +9,9 @@ spring:
     url: jdbc:mysql://101.132.43.76:3306/javaee?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: javaee
     password: javaee
+
     type: com.alibaba.druid.pool.DruidDataSource
+
     druid:
       # 下面为连接池的补充设置，应用到上面所有数据源中
       # 初始化连接数大小，最小，最大
