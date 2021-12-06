@@ -1,10 +1,14 @@
 package com.javaee.sys.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.service.AudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +21,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements AudioService {
 
+    @Autowired
+    AudioMapper audioMapper;
+
+    public List getAllAudios()
+    {
+        LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.eq(BannerItem::getBannerId, id);
+        List<Audio> audioList = audioMapper.selectList(null);
+        return audioList;
+    };
 }
