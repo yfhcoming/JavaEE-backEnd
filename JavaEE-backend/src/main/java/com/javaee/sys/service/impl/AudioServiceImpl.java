@@ -24,7 +24,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     @Autowired
     AudioMapper audioMapper;
 
-    public List getAllAudios()
+    public List findAllAudios()
     {
         LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
 //        wrapper.eq(BannerItem::getBannerId, id);

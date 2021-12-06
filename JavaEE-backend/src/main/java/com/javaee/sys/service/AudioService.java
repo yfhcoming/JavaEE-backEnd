@@ -14,5 +14,6 @@ import java.util.List;
  * @since 2021-12-05
  */
 public interface AudioService extends IService<Audio> {
-    List getAllAudios();
+    List findAllAudios();
+
 }
