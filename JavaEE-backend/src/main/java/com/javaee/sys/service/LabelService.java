@@ -16,4 +16,5 @@ import java.util.List;
 public interface LabelService extends IService<Label> {
     List findAllLabels();
 
+    boolean isLabelIn(Integer labelId);
 }

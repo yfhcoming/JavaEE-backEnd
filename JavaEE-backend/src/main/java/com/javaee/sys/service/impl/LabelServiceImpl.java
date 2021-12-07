@@ -32,4 +32,12 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
         List<Label> labelList = labelMapper.selectList(null);
         return labelList;
     };
+
+    public boolean isLabelIn(Integer labelId){
+        LambdaQueryWrapper<Label> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Label::getLabelId, labelId);
+        Integer integer = labelMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
+    }
 }

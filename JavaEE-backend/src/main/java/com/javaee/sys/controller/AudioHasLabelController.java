@@ -1,9 +1,16 @@
 package com.javaee.sys.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.javaee.sys.service.AudioHasLabelService;
+import com.javaee.sys.vo.audio.AudioHasLabelVo;
+import com.javaee.sys.vo.collection.CollectionHasAudioVo;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p>
@@ -14,7 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-12-07
  */
 @RestController
-@RequestMapping("/sys/audio-has-label")
+@RequestMapping("/audio")
 public class AudioHasLabelController {
+
+    @Autowired
+    AudioHasLabelService audioHasLabelService;
+
+    @PostMapping("/addLabel")
+    @ApiOperation(value = "add an label to the audio")
+    public boolean addLabel(AudioHasLabelVo vo)
+    {
+        return audioHasLabelService.addLabel(vo);
+    }
+
+    @GetMapping("/findLabelsById")
+    @ApiOperation(value = "find all labels of the audio by audioId")
+    public List findLabelsById(@RequestParam("audioId") @Valid @NotNull Integer audioId){
+        return audioHasLabelService.findLabelsById(audioId);
+    }
 
 }
