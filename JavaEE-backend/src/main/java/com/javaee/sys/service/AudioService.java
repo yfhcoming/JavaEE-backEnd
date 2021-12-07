@@ -2,6 +2,7 @@ package com.javaee.sys.service;
 
 import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -16,4 +17,5 @@ import java.util.List;
 public interface AudioService extends IService<Audio> {
     List findAllAudios();
 
+    boolean isAudioIn(Integer audioId);
 }

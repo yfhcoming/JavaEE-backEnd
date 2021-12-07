@@ -31,4 +31,12 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         List<Audio> audioList = audioMapper.selectList(null);
         return audioList;
     };
+
+    public boolean isAudioIn(Integer audioId){
+        LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Audio::getAudioId, audioId);
+        Integer integer = audioMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
+    }
 }

@@ -2,6 +2,7 @@ package com.javaee.sys.service;
 
 import com.javaee.sys.entity.Collection;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CollectionService extends IService<Collection> {
 
+    boolean isCollectionIn(Integer collectionId);
 }

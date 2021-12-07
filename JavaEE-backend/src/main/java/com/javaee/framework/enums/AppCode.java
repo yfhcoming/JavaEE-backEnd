@@ -12,7 +12,13 @@ public enum AppCode implements StatusCode {
     PRICE_ERROR(2001, "价格异常"),
     PRODUCT_NOT_EXIST(2002, "商品不存在"),
     ORDER_NOT_EXIST(2003, "订单不存在"),
-    ORDER_DETAILS_NOT_EXIST(2004, "订单详情不存在");
+    ORDER_DETAILS_NOT_EXIST(2004, "订单详情不存在"),
+
+
+    AUDIO_NOT_EXIST(2005,"音频不存在"),
+    COLLECTION_NOT_EXIST(2006,"收藏夹不存在"),
+    COLLECTION_HAS_AUDIO_HAS_IN(2007,"音频已在收藏夹中"),
+    COLLECTION_HAS_AUDIO_NOT_IN(2008,"音频不在收藏夹中"),;
 
     private int code;
     private String msg;
