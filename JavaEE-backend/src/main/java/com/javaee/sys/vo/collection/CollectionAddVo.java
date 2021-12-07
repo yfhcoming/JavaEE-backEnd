@@ -1,7 +1,6 @@
 package com.javaee.sys.vo.collection;
 
 
-import com.sun.istack.internal.NotNull;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 

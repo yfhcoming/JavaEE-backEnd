@@ -2,7 +2,7 @@ package com.javaee.sys.service;
 
 import com.javaee.sys.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
+import com.javaee.sys.vo.user.*;
 
 /**
  * <p>
@@ -13,13 +13,14 @@ import org.apache.ibatis.annotations.Param;
  * @since 2021-12-05
  */
 public interface UserService extends IService<User> {
-    User getUserById(String userid);
 
-    User getUserByEmail(String email);
+    String userLogin(LoginVo loginVo);
 
-    User getUserByTelephone(String telephone);
+    String userRegister(RegisterVo registerVo);
 
-    boolean pswUpdate(String id,String oldpassword,String newpassword);
+    String passwordUpdate(PasswordUpdateVo passwordUpdateVo);
 
-    boolean infoUpdate(String id,String email,String telephone);
+    String infoUpdate(InfoUpdateVo infoUpdateVo);
+
+    UserInfoVo infoView(Integer id);
 }

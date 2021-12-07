@@ -1,17 +1,16 @@
 package com.javaee.sys.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.javaee.sys.entity.User;
 import com.javaee.sys.service.UserService;
+import com.javaee.sys.vo.user.*;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.Wrapper;
 
 /**
  * <p>
@@ -28,77 +27,37 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/login")
-    public String Login(String emailortelephone,String password)
+    @ApiOperation(value = "login by email or telephone")
+    public String Login(@Validated@RequestBody LoginVo loginVo)
     {
-        User user1=userService.getUserByEmail(emailortelephone);
-        User user2=userService.getUserByTelephone(emailortelephone);
-        if(user1!=null){
-            if(user1.getPassword().equals(password)) return "登陆成功！";
-            else return "密码错误！";
-        }
-        else if(user2!=null){
-            if(user2.getPassword().equals(password)) return "登陆成功！";
-            else return "密码错误！";
-        }
-        else return "用户不存在！";
+        return userService.userLogin(loginVo);
     }
 
     @PostMapping("/register")
-    public String Register(@RequestBody User user)
+    @ApiOperation(value = "user register")
+    public String Register(@Validated@RequestBody RegisterVo registerVo)
     {
-        User user1=userService.getUserByEmail(user.getEmail());
-        User user2=userService.getUserByTelephone(user.getTelephone());
-        if(user1!=null)
-        {
-            return "该邮箱已被注册！";
-        }
-        else if(user2!=null)
-        {
-            return "该手机号已被注册！";
-        }
-        else
-        {
-            boolean result=userService.save(user);
-            if (result) return "注册成功！";
-            else return "注册失败！请重试！";
-        }
+        return userService.userRegister(registerVo);
     }
 
     @PostMapping("/pswupdate")
-    public String pswUpdate(String id,String oldpassword,String newpassword)
+    @ApiOperation(value = "update user password")
+    public String pswUpdate(@Validated@RequestBody PasswordUpdateVo passwordUpdateVo)
     {
-        User user=userService.getUserById(id);
-        if(user!=null){
-            if(user.getPassword().equals(oldpassword))
-            {
-                boolean result=userService.pswUpdate(id,oldpassword,newpassword);
-                if(result) return "密码修改成功！";
-                else return "密码修改失败！";
-            }
-            else return "密码错误！";
-        }
-        else return "用户不存在！";
+        return userService.passwordUpdate(passwordUpdateVo);
     }
 
     @PostMapping("/infoupdate")
-    public String infoUpdate(String id,String email,String telephone)
+    @ApiOperation(value = "update user information")
+    public String infoUpdate(@Validated@RequestBody InfoUpdateVo infoUpdateVo)
     {
-        User user=userService.getUserById(id);
-        if(user!=null){
-            boolean result= userService.infoUpdate(id,email,telephone);
-            if(result) return "用户信息修改成功！";
-            else return "用户信息修改失败！";
-        }
-        else{
-            return "用户不存在！";
-        }
+        return userService.infoUpdate(infoUpdateVo);
     }
 
     @PostMapping("/infoview")
-    public User infoView(String id)
+    @ApiOperation(value = "view user information by id")
+    public UserInfoVo infoView(Integer id)
     {
-        User user=userService.getUserById(id);
-        if(user!=null) user.setPassword("密码已隐藏");
-        return user;
+        return userService.infoView(id);
     }
 }

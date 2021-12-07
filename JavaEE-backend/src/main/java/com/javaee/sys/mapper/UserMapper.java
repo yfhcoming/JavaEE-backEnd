@@ -16,21 +16,5 @@ import org.apache.ibatis.annotations.Update;
  * @since 2021-12-05
  */
 public interface UserMapper extends BaseMapper<User> {
-    @Select("select * from user where user_id=#{userid}")
-    User getUserById(@Param("userid") String userid);
 
-    @Select("select * from user where email=#{email}")
-    User getUserByEmail(@Param("email") String email);
-
-    @Select("select * from user where telephone=#{telephone}")
-    User getUserByTelephone(@Param("telephone") String telephone);
-
-    @Insert("insert into user values(#{user.userId},#{user.email},#{user.password},#{user.telephone})")
-    boolean addUser(@Param("user") User user);
-
-    @Update("update user set password=#{newpassword} where user_id=#{userid} and password=#{oldpassword}")
-    boolean pswUpdate(@Param("userid") String id,@Param("oldpassword") String oldpassword,@Param("newpassword") String newpassword);
-
-    @Update("update user set email=#{email},telephone=#{telephone}where user_id=#{id}")
-    boolean infoUpdate(@Param("id") String id,@Param("email") String email,@Param("telephone") String telephone);
 }
