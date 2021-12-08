@@ -26,4 +26,10 @@ public class APIException extends RuntimeException {
         this.msg = AppCode.APP_ERROR.getMsg();
     }
 
+    //
+    public APIException(StatusCode statusCode){
+        super(statusCode.getMsg());
+        this.code=statusCode.getCode();
+        this.msg=statusCode.getMsg();
+    }
 }
