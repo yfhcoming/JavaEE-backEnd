@@ -42,10 +42,10 @@ public class LabelController {
         return labelService.findAllLabels();
     }
 
-    @GetMapping("/findAudiosByLabelId")
+    @GetMapping("/findAllAudiosByLabelId")
     @ApiOperation(value = "find all audios of the label by LabelId")
-    public List findAudiosByLabelId(@RequestParam("LabelId") @Valid @NotNull Integer LabelId){
-        return audioHasLabelService.findAudiosByLabelId(LabelId);
+    public List findAllAudiosByLabelId(@RequestParam("LabelId") @Valid @NotNull Integer LabelId){
+        return audioHasLabelService.findAllAudiosByLabelId(LabelId);
     }
 
 }

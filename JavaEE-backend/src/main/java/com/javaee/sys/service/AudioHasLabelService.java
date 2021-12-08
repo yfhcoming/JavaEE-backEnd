@@ -20,7 +20,7 @@ import java.util.List;
 public interface AudioHasLabelService extends IService<AudioHasLabel> {
     boolean addLabel(AudioHasLabelVo dto);
 
-    List findLabelsById(Integer audioId);
+    List findAllLabelsById(Integer audioId);
 
-    List findAudiosByLabelId(Integer LabelId);
+    List findAllAudiosByLabelId(Integer LabelId);
 }

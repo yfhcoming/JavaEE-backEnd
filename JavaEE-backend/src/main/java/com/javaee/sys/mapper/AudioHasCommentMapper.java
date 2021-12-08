@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2021-12-08
  */
 public interface AudioHasCommentMapper extends BaseMapper<AudioHasComment> {
-    @Results(id = "findLabelsById",
+    @Results(id = "findAllCommentsById",
             value = {
                     @Result(property = "commentId", column = "comment_id", id = true),
                     @Result(property = "userId", column = "user_id"),
@@ -29,5 +29,5 @@ public interface AudioHasCommentMapper extends BaseMapper<AudioHasComment> {
                     @Result(property = "createTime", column = "create_time"),
             })
     @Select("select C.comment_id,C.user_id,U.name,C.content,C.create_time from audio_has_comment as H join audio as A on H.audio_id=A.audio_id join comment as C on H.comment_id=C.comment_id join user as U on C.user_id =U.user_id where A.audio_id=#{audioId}")
-    List<CommentPo> findCommentsById(@Param("audioId")Integer audioId);
+    List<CommentPo> findAllCommentsById(@Param("audioId")Integer audioId);
 }

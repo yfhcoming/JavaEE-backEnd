@@ -9,6 +9,8 @@ import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.Collection;
 import com.javaee.sys.entity.CollectionHasAudio;
 import com.javaee.sys.mapper.CollectionHasAudioMapper;
+import com.javaee.sys.po.AudioPo;
+import com.javaee.sys.po.LabelPo;
 import com.javaee.sys.service.AudioService;
 import com.javaee.sys.service.CollectionHasAudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -16,6 +18,8 @@ import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -82,5 +86,10 @@ public class CollectionHasAudioServiceImpl extends ServiceImpl<CollectionHasAudi
             throw new APIException(AppCode.COLLECTION_HAS_AUDIO_NOT_IN, "音频不在收藏夹中：collectionId - " + dto.getCollectionId()
                     +", audioId - " + dto.getAudioId());
         }
+    }
+
+    public List findAllAudiosById(Integer audioId) {
+        List<AudioPo> audios = collectionHasAudioMapper.findAllAudiosById(audioId);
+        return audios;
     }
 }

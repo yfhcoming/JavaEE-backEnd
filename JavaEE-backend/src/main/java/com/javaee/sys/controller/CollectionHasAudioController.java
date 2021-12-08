@@ -9,11 +9,11 @@ import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p>
@@ -41,5 +41,11 @@ public class CollectionHasAudioController {
     @ApiOperation(value = "delete an audio in the collection")
     public boolean deleteAudio(@Validated CollectionHasAudioVo vo){
         return collectionHasAudioService.deleteAudio(vo);
+    }
+
+    @GetMapping("/findAllAudiosById")
+    @ApiOperation(value = "find all audios of the audio by audioId")
+    public List findAllAudiosById(@RequestParam("collectionId") @Valid @NotNull Integer collectionId){
+        return collectionHasAudioService.findAllAudiosById(collectionId);
     }
 }

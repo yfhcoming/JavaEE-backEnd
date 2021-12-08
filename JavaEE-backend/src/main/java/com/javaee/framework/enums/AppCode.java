@@ -21,6 +21,7 @@ public enum AppCode implements StatusCode {
     COLLECTION_HAS_AUDIO_HAS_IN(2008,"音频已在收藏夹中"),
     COLLECTION_HAS_AUDIO_NOT_IN(2009,"音频不在收藏夹中"),
     AUDIO_HAS_LABEL_HAS_IN(2010,"音频已有该标签"),
+    USER_SCORE_AUDIO_HAS_IN(2011,"用户已为该音频打分"),
 
     //用户相关code
     PASSWORD_ERROR(2030,"密码错误"),

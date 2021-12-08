@@ -20,7 +20,7 @@ import java.util.List;
  */
 public interface AudioHasCommentService extends IService<AudioHasComment> {
 
-    List findCommentsById(Integer audioId);
+    List findAllCommentsById(Integer audioId);
 
     boolean addCommentByUser(addCommentVo dto);
 

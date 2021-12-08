@@ -10,6 +10,9 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -39,16 +42,32 @@ public class AudioController {
 
     @GetMapping("/findAll")
     @ApiOperation(value = "find all audios")
-    public List findAllAudios()
-    {
+    public List findAllAudios() {
         return audioService.findAllAudios();
     }
 
     @GetMapping("/find/{audioId}")
     @ApiOperation(value = "find the audio by id")
-    public Audio findById(@PathVariable("audioId")Integer audioId)
-    {
+    public Audio findById(@PathVariable("audioId") Integer audioId) {
         return audioService.getById(audioId);
+    }
+
+    @GetMapping("/findScoreById")
+    @ApiOperation(value = "find the score of the audio by audioId")
+    public BigDecimal findScoreById(@RequestParam("audioId") @Valid @NotNull Integer audioId) {
+        return audioService.findScoreById(audioId);
+    }
+
+    @GetMapping("/searchByName")
+    @ApiOperation(value = "search the audio by audio's name")
+    public List searchByName(@RequestParam("name") @Valid @NotNull String name) {
+        return audioService.searchByName(name);
+    }
+
+    @GetMapping("/getRandomAudio")
+    @ApiOperation(value = "get an audio in random")
+    public Audio getRandomAudio() {
+        return audioService.getRandomAudio();
     }
 
 }

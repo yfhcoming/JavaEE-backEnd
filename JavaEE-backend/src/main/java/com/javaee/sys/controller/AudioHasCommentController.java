@@ -26,10 +26,10 @@ public class AudioHasCommentController {
     @Autowired
     AudioHasCommentService audioHasCommentService;
 
-    @GetMapping("/findCommentsById")
+    @GetMapping("/findAllCommentsById")
     @ApiOperation(value = "find all labels of the audio by audioId")
-    public List findCommentsById(@RequestParam("audioId") @Valid @NotNull Integer audioId){
-        return audioHasCommentService.findCommentsById(audioId);
+    public List findAllCommentsById(@RequestParam("audioId") @Valid @NotNull Integer audioId){
+        return audioHasCommentService.findAllCommentsById(audioId);
     }
 
     @PostMapping("/addCommentByUser")

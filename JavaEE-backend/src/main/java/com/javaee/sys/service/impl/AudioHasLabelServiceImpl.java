@@ -74,13 +74,13 @@ public class AudioHasLabelServiceImpl extends ServiceImpl<AudioHasLabelMapper, A
         return true;
     }
 
-    public List findLabelsById(Integer audioId) {
-        List<LabelPo> labels = audioHasLabelMapper.findLabelsById(audioId);
+    public List findAllLabelsById(Integer audioId) {
+        List<LabelPo> labels = audioHasLabelMapper.findAllLabelsById(audioId);
         return labels;
     }
 
-    public List findAudiosByLabelId(Integer LabelId){
-        List<String> audiosId = audioHasLabelMapper.findAudiosByLabelId(LabelId);
+    public List findAllAudiosByLabelId(Integer LabelId){
+        List<String> audiosId = audioHasLabelMapper.findAllAudiosByLabelId(LabelId);
         return audiosId;
     }
 }

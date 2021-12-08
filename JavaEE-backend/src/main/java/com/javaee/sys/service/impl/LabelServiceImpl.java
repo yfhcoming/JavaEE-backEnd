@@ -28,7 +28,6 @@ public class LabelServiceImpl extends ServiceImpl<LabelMapper, Label> implements
     public List findAllLabels()
     {
         LambdaQueryWrapper<Label> wrapper = new LambdaQueryWrapper<>();
-//        wrapper.eq(BannerItem::getBannerId, id);
         List<Label> labelList = labelMapper.selectList(null);
         return labelList;
     };

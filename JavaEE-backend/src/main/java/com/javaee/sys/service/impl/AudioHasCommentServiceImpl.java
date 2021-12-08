@@ -47,12 +47,12 @@ public class AudioHasCommentServiceImpl extends ServiceImpl<AudioHasCommentMappe
     @Autowired
     CommentService commentService;
 
-    public List findCommentsById(@RequestParam("audioId") @Valid @NotNull Integer audioId){
-        List<CommentPo> comments = audioHasCommentMapper.findCommentsById(audioId);
+    public List findAllCommentsById(Integer audioId){
+        List<CommentPo> comments = audioHasCommentMapper.findAllCommentsById(audioId);
         return comments;
     }
 
-    public boolean addCommentByUser(@Validated addCommentVo dto){
+    public boolean addCommentByUser(addCommentVo dto){
         // TODO 先判断评论 用户
         // 先创建评论 (userId )
         // 在创建audio 拥有评论 表
@@ -66,13 +66,12 @@ public class AudioHasCommentServiceImpl extends ServiceImpl<AudioHasCommentMappe
         // 测试之后发现 BeanConvertUtils 的功能就是把名称相同的字段进行复制，没有名称相同的字段设置为null
         Comment comment = BeanConvertUtils.convertTo(dto, Comment::new);
 
-
-
         commentService.save(comment);
 
-//        AudioHasComment audioHasComment = BeanConvertUtils.convertTo(new AudioHasCommentPo(dto.getAudioId(),comment.getCommentId()),
-//                AudioHasComment::new);
+        AudioHasComment audioHasComment = BeanConvertUtils.convertTo(new AudioHasCommentPo(dto.getAudioId(),comment.getCommentId()),
+                AudioHasComment::new);
 
+        this.save(audioHasComment);
 
         return true;
     }
