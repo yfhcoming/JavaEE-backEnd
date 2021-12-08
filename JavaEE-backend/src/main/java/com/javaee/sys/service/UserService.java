@@ -14,6 +14,8 @@ import com.javaee.sys.vo.user.*;
  */
 public interface UserService extends IService<User> {
 
+    boolean isUserIn(Integer userId);
+
     String userLogin(LoginVo loginVo);
 
     String userRegister(RegisterVo registerVo);

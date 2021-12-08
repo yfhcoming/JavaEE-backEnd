@@ -29,9 +29,10 @@ public class Comment implements Serializable {
     @TableId(value = "comment_id", type = IdType.AUTO)
     private Integer commentId;
 
-    private String content;
+    // 外键
+    private Integer userId;
 
-    private LocalDateTime commenTime;
+    private String content;
 
     /**
      * 创建时间

@@ -19,7 +19,10 @@ import com.javaee.sys.vo.audio.AudioHasLabelVo;
 import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -74,5 +77,10 @@ public class AudioHasLabelServiceImpl extends ServiceImpl<AudioHasLabelMapper, A
     public List findLabelsById(Integer audioId) {
         List<LabelPo> labels = audioHasLabelMapper.findLabelsById(audioId);
         return labels;
+    }
+
+    public List findAudiosByLabelId(Integer LabelId){
+        List<String> audiosId = audioHasLabelMapper.findAudiosByLabelId(LabelId);
+        return audiosId;
     }
 }

@@ -9,27 +9,25 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author T12
- * @since 2021-12-07
+ * @since 2021-12-08
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class CollectionHasAudio implements Serializable {
+public class AudioHasComment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    // 外键
-    private Integer collectionId;
-
-    // 外键
     private Integer audioId;
+
+    private Integer commentId;
 
 
 }

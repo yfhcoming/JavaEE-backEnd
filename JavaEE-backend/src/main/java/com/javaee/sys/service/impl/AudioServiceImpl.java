@@ -24,6 +24,14 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     @Autowired
     AudioMapper audioMapper;
 
+    public boolean isAudioIn(Integer audioId){
+        LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Audio::getAudioId, audioId);
+        Integer integer = audioMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
+    }
+
     public List findAllAudios()
     {
         LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
@@ -32,11 +40,5 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         return audioList;
     };
 
-    public boolean isAudioIn(Integer audioId){
-        LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Audio::getAudioId, audioId);
-        Integer integer = audioMapper.selectCount(wrapper);
-        boolean result = (integer == 0)?false:true;
-        return result;
-    }
+
 }

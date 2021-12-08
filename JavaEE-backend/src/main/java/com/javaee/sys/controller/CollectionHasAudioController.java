@@ -8,6 +8,7 @@ import com.javaee.sys.service.CollectionHasAudioService;
 import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,14 +32,14 @@ public class CollectionHasAudioController {
 
     @PostMapping("/addAudio")
     @ApiOperation(value = "add an audio into the collection")
-    public boolean addAudio(CollectionHasAudioVo vo)
+    public boolean addAudio(@Validated CollectionHasAudioVo vo)
     {
         return collectionHasAudioService.addAudio(vo);
     }
 
     @PostMapping("/deleteAudio")
     @ApiOperation(value = "delete an audio in the collection")
-    public boolean deleteAudio(CollectionHasAudioVo vo){
+    public boolean deleteAudio(@Validated CollectionHasAudioVo vo){
         return collectionHasAudioService.deleteAudio(vo);
     }
 }

@@ -3,6 +3,7 @@ package com.javaee.sys.service;
 import com.javaee.sys.entity.AudioHasLabel;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.javaee.sys.vo.audio.AudioHasLabelVo;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -20,4 +21,6 @@ public interface AudioHasLabelService extends IService<AudioHasLabel> {
     boolean addLabel(AudioHasLabelVo dto);
 
     List findLabelsById(Integer audioId);
+
+    List findAudiosByLabelId(Integer LabelId);
 }
