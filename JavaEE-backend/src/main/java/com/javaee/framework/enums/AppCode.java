@@ -30,6 +30,8 @@ public enum AppCode implements StatusCode {
     PASSWORD_UPDATE_FAIL(2035,"密码更新失败"),
     USER_INFO_UPDATE_FAIL(2036,"用户信息更新失败"),
     USER_INFO_GET_FAIL(2037,"用户信息获取失败"),
+    SEND_EMAIL_FAIL(2038,"发送邮件失败"),
+    VERIFICATION_CODE_ERROR(2039,"验证码错误"),
     ;
 
     private int code;

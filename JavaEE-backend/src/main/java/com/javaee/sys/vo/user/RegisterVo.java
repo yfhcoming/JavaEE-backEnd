@@ -15,4 +15,7 @@ public class RegisterVo {
     //注册密码
     @NotEmpty(message = "密码不能为空！")
     private String password;
+    //验证码
+    @NotEmpty(message = "验证码不能为空！")
+    private String code;
 }
