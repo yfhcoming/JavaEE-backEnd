@@ -5,14 +5,21 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
-import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.User;
 import com.javaee.sys.mapper.UserMapper;
 import com.javaee.sys.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.javaee.sys.vo.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * <p>
@@ -28,13 +35,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     UserMapper userMapper;
 
-    public boolean isUserIn(Integer userId){
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getUserId, userId);
-        Integer integer = userMapper.selectCount(wrapper);
-        boolean result = (integer == 0)?false:true;
-        return result;
-    }
+    @Autowired
+    JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String from;
+
+    private Map<String,String> codeMap=new HashMap<>();
 
     @Override
     public String userLogin(LoginVo loginVo){
@@ -115,5 +122,49 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if(user!=null) userInfoVo=BeanConvertUtils.convertTo(user,UserInfoVo::new);
         else throw new APIException(AppCode.USER_INFO_GET_FAIL);
         return userInfoVo;
+    }
+
+    @Override
+    public boolean sendEmail(String email){
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(email);
+        message.setSubject("LIAN的验证码");
+        String code=randomCode();
+        message.setText("尊敬的用户,您的验证码为:"+code+".请尽快验证");
+        try
+        {
+            mailSender.send(message);
+            codeMap.put(email,code);
+            return true;
+        }catch(MailException e){
+            throw new APIException("邮件发送失败");
+        }
+    }
+
+    @Override
+    public boolean checkEmail(String email,String code){
+
+        String checkedCode=codeMap.get(email);
+        if(checkedCode.equals(code)) return true;
+        else return false;
+    }
+
+    @Override
+    public String randomCode(){
+        StringBuilder str = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            str.append(random.nextInt(10));
+        }
+        return str.toString();
+    }
+
+    @Override
+    public boolean isUserIn(Integer userId){
+        User user=this.getById(userId);
+        if(user==null) return false;
+        else return true;
     }
 }

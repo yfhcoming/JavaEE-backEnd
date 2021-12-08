@@ -60,4 +60,16 @@ public class UserController {
     {
         return userService.infoView(id);
     }
+
+    @PostMapping("/sendemail")
+    public boolean sendEmail(String email)
+    {
+        return userService.sendEmail(email);
+    }
+
+    @PostMapping("/checkemail")
+    public boolean checkEmail(String email,String code)
+    {
+        return userService.checkEmail(email,code);
+    }
 }

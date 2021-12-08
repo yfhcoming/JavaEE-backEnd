@@ -14,8 +14,6 @@ import com.javaee.sys.vo.user.*;
  */
 public interface UserService extends IService<User> {
 
-    boolean isUserIn(Integer userId);
-
     String userLogin(LoginVo loginVo);
 
     String userRegister(RegisterVo registerVo);
@@ -25,4 +23,12 @@ public interface UserService extends IService<User> {
     String infoUpdate(InfoUpdateVo infoUpdateVo);
 
     UserInfoVo infoView(Integer id);
+
+    boolean sendEmail(String email);
+
+    boolean checkEmail(String email,String code);
+
+    String randomCode();
+
+    boolean isUserIn(Integer userId);
 }
