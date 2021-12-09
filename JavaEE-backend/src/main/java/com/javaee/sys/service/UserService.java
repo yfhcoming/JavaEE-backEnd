@@ -31,4 +31,8 @@ public interface UserService extends IService<User> {
     String randomCode();
 
     boolean isUserIn(Integer userId);
+
+    User getByEmail(String email);
+
+    User getByTelephone(String telephone);
 }

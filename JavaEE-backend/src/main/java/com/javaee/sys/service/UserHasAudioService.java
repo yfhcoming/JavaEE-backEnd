@@ -2,6 +2,7 @@ package com.javaee.sys.service;
 
 import com.javaee.sys.entity.UserHasAudio;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.javaee.sys.vo.audio.AddAudioVo;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserHasAudioService extends IService<UserHasAudio> {
 
+    boolean uploadAudio(AddAudioVo addAudioVo);
 }

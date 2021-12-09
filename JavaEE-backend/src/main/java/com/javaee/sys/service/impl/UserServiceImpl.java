@@ -46,12 +46,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String userLogin(LoginVo loginVo){
-        LambdaQueryWrapper<User> wrapper1=new LambdaQueryWrapper<>();
-        wrapper1.eq(User::getEmail,loginVo.getLoginKey());
-        User user1=userMapper.selectOne(wrapper1);
-        LambdaQueryWrapper<User> wrapper2=new LambdaQueryWrapper<>();
-        wrapper2.eq(User::getTelephone,loginVo.getLoginKey());
-        User user2=userMapper.selectOne(wrapper2);
+        User user1=getByEmail(loginVo.getLoginKey());
+        User user2=getByTelephone(loginVo.getLoginKey());
         if(user1!=null){
             if(user1.getPassword().equals(loginVo.getPassword())) return "登陆成功！";
             else throw new APIException(AppCode.PASSWORD_ERROR);
@@ -65,12 +61,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public String userRegister(RegisterVo registerVo){
-        LambdaQueryWrapper<User> wrapper1=new LambdaQueryWrapper<>();
-        wrapper1.eq(User::getEmail,registerVo.getEmail());
-        User user1=userMapper.selectOne(wrapper1);
-        LambdaQueryWrapper<User> wrapper2=new LambdaQueryWrapper<>();
-        wrapper2.eq(User::getTelephone,registerVo.getTelephone());
-        User user2=userMapper.selectOne(wrapper2);
+        User user1=getByEmail(registerVo.getEmail());
+        User user2=getByTelephone(registerVo.getTelephone());
         if(user1!=null) throw new APIException(AppCode.EMAIL_HAS_EXIST);
         else if(user2!=null) throw new APIException(AppCode.TELEPHONE_HAS_EXIST);
         else
@@ -127,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public UserInfoVo infoView(Integer id){
         User user=this.getById(id);
-        UserInfoVo userInfoVo=null;
+        UserInfoVo userInfoVo;
         if(user!=null) userInfoVo=BeanConvertUtils.convertTo(user,UserInfoVo::new);
         else throw new APIException(AppCode.USER_INFO_GET_FAIL);
         return userInfoVo;
@@ -156,8 +148,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public boolean checkEmail(String email,String code){
 
         String checkedCode=codeMap.get(email);
-        if(checkedCode.equals(code)) return true;
-        else return false;
+        return checkedCode.equals(code);
     }
 
     @Override
@@ -177,5 +168,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Integer integer = userMapper.selectCount(wrapper);
         boolean result = (integer == 0)?false:true;
         return result;
+    }
+
+    @Override
+    public User getByEmail(String email){
+        LambdaQueryWrapper<User> wrapper1=new LambdaQueryWrapper<>();
+        wrapper1.eq(User::getEmail,email);
+        return userMapper.selectOne(wrapper1);
+    }
+
+    @Override
+    public User getByTelephone(String telephone){
+        LambdaQueryWrapper<User> wrapper1=new LambdaQueryWrapper<>();
+        wrapper1.eq(User::getTelephone,telephone);
+        return userMapper.selectOne(wrapper1);
     }
 }
