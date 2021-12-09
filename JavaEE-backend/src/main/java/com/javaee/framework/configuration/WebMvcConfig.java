@@ -6,16 +6,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    /**
+     * 开启跨域
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        //配置允许跨域的路径
+        // 设置允许跨域的路由
         registry.addMapping("/**")
-                //配置允许访问的跨域资源的请求域名
+                // 设置允许跨域请求的域名------------修改此行
+                .allowedOriginPatterns("*")
+                // 是否允许证书（cookies）
                 .allowCredentials(true)
-                .allowedOrigins("*")
-                //配置允许访问该跨域资源服务器的请求方法
+                // 设置允许的方法
                 .allowedMethods("*")
-                //配置允许请求 头部head的访问
-                .allowedHeaders("*");
+                // 跨域允许时间
+                .maxAge(3600);
     }
 }
