@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
+import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.User;
 import com.javaee.sys.mapper.UserMapper;
 import com.javaee.sys.service.UserService;
@@ -171,8 +172,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public boolean isUserIn(Integer userId){
-        User user=this.getById(userId);
-        if(user==null) return false;
-        else return true;
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUserId, userId);
+        Integer integer = userMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
     }
 }
