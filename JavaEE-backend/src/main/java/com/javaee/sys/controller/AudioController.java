@@ -70,4 +70,21 @@ public class AudioController {
         return audioService.getRandomAudio();
     }
 
+    @GetMapping("/display")
+    @ApiOperation(value = "get display audio url by id")
+    public String audioDisplay(Integer id){
+        return audioService.audioDisplay(id);
+    }
+
+    @GetMapping("/download")
+    @ApiOperation(value = "get download url by id")
+    public String audioDownload(Integer id){
+        return audioService.audioDownload(id);
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "delete audio by id")
+    public boolean deleteAudio(Integer id){
+        return audioService.deleteAudio(id);
+    }
 }

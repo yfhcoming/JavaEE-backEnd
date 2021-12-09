@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
+import static com.javaee.framework.utils.QiNiuUtils.downLoad;
 import static com.javaee.framework.utils.QiNiuUtils.upLoad;
 
 /**
@@ -76,16 +74,4 @@ public class UserController {
         return userService.checkEmail(email,code);
     }
 
-    @GetMapping("/filetest")
-    public String uploadfile()
-    {
-        File file=new File("C:\\Users\\22123\\Videos\\Captures\\New Unity Project_test - FirstScene - PC, Mac & Linux Standalone - Unity 2021.1.16f1c1 Personal _DX11_ 2021-08-08 15-51-17.mp4");
-        FileInputStream filestream= null;
-        try {
-            filestream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return upLoad(filestream,"testvedio");
-    }
 }

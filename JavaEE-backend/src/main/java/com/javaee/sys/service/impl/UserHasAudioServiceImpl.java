@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * <p>
@@ -39,7 +40,7 @@ public class UserHasAudioServiceImpl extends ServiceImpl<UserHasAudioMapper, Use
     {
         String url;
         try {
-            FileInputStream fileInputStream= (FileInputStream) addAudioVo.getMultipartFile().getInputStream();
+            InputStream fileInputStream= addAudioVo.getMultipartFile().getInputStream();
             url=QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
         } catch (IOException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);

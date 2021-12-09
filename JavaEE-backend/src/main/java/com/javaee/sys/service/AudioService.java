@@ -28,4 +28,12 @@ public interface AudioService extends IService<Audio> {
     List searchByName(String name);
 
     Audio getRandomAudio();
+
+    String audioDisplay(Integer id);
+
+    String audioDownload(Integer id);
+
+    boolean deleteAudio(Integer id);
+
+    boolean deleteByAudioId(Integer id);
 }
