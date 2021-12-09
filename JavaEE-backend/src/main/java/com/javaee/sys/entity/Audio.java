@@ -36,7 +36,7 @@ public class Audio implements Serializable {
 
     private String des;
 
-    private String qiniu_location;
+    private String qiniuLocation;
 
     /**
      * 创建时间
