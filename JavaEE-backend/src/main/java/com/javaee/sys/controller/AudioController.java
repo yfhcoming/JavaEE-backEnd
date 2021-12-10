@@ -3,6 +3,7 @@ package com.javaee.sys.controller;
 
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.mapper.AudioMapper;
+import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
 import com.javaee.sys.vo.audio.getOneVo;
 import io.swagger.annotations.ApiOperation;
@@ -48,8 +49,8 @@ public class AudioController {
 
     @GetMapping("/find/{audioId}")
     @ApiOperation(value = "find the audio by id")
-    public Audio findById(@PathVariable("audioId") Integer audioId) {
-        return audioService.getById(audioId);
+    public AudioPo findById(@PathVariable("audioId") Integer audioId) {
+        return audioService.findById(audioId);
     }
 
     @GetMapping("/findScoreById")

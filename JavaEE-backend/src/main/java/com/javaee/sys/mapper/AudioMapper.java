@@ -2,6 +2,8 @@ package com.javaee.sys.mapper;
 
 import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.javaee.sys.po.AudioPo;
+import com.javaee.sys.po.CommentPo;
 import com.javaee.sys.vo.audio.getOneVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -38,5 +40,29 @@ public interface AudioMapper extends BaseMapper<Audio> {
 
     @Select("SELECT * FROM audio AS a1 JOIN (SELECT ROUND(RAND()*(SELECT MAX(audio_id)FROM audio)) AS audio_id) AS a2 WHERE a1.audio_id>=a2.audio_id ORDER BY a1.audio_id LIMIT 1")
     Audio getRandomAudio();
+
+    @Results(id = "findAllCommentsById",
+            value = {
+                    @Result(property = "commentId", column = "comment_id", id = true),
+                    @Result(property = "userId", column = "user_id"),
+                    @Result(property = "user_name", column = "userName"),
+                    @Result(property = "content", column = "content"),
+                    @Result(property = "createTime", column = "create_time"),
+            })
+    @Select("select C.comment_id,C.user_id,U.user_name,C.content,C.create_time from audio_has_comment as H join audio as A on H.audio_id=A.audio_id join comment as C on H.comment_id=C.comment_id join user as U on C.user_id =U.user_id where A.audio_id=#{audioId}")
+    List<CommentPo> findAllCommentsById(@Param("audioId")Integer audioId);
+
+
+    @Results(id = "findById",
+            value = {
+                    @Result(property = "audioId", column = "audio_id", id = true),
+                    @Result(property = "audioName", column = "audio_name"),
+                    @Result(property = "score", column = "score"),
+                    @Result(property = "des", column = "des"),
+                    @Result(property = "uploadUserName", column = "user_name"),
+                    @Result(property = "createTime", column = "create_time"),
+            })
+    @Select("select A.audio_id,A.audio_name,A.score,A.des,U.user_name,A.create_time from user_has_audio as H join audio as A on H.audio_id=A.audio_id join user as U on H.user_id =U.user_id where A.audio_id=#{audioId}")
+    AudioPo findById(Integer audioId);
 
 }

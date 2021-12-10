@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
+import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.UserHasAudio;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.mapper.UserHasAudioMapper;
+import com.javaee.sys.po.AudioPo;
+import com.javaee.sys.po.CommentPo;
 import com.javaee.sys.service.AudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.swagger.models.auth.In;
@@ -52,6 +55,17 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         List<Audio> audioList = audioMapper.selectList(null);
         return audioList;
     };
+
+    public AudioPo findById(Integer audioId){
+        AudioPo audioPo = audioMapper.findById(audioId);
+        if(audioPo == null){
+            Audio auto = this.getById(audioId);
+            AudioPo audioPoTMP = BeanConvertUtils.convertTo(auto, AudioPo::new);
+            return audioPoTMP;
+
+        }
+        return audioPo;
+    }
 
     public BigDecimal findScoreById(Integer audioId){
         // TODO 验证音频是否有评分
