@@ -67,7 +67,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     public List<Audio> searchByName(String name){
         List<Audio> audios = new LambdaQueryChainWrapper<>(audioMapper)
-                .like(Audio::getName, name)
+                .like(Audio::getAudioName, name)
                 .list();
         return audios;
 

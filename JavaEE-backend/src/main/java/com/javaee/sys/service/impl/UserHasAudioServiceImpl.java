@@ -46,7 +46,7 @@ public class UserHasAudioServiceImpl extends ServiceImpl<UserHasAudioMapper, Use
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
         Audio audio=new Audio();
-        audio.setName(addAudioVo.getName());
+        audio.setAudioName(addAudioVo.getName());
         audio.setQiniuLocation(url);
         try
         {
