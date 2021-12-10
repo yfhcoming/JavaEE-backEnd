@@ -29,7 +29,7 @@ public class Label implements Serializable {
     @TableId(value = "label_id", type = IdType.AUTO)
     private Integer labelId;
 
-    private String name;
+    private String labelName;
 
     /**
      * 创建时间

@@ -32,7 +32,7 @@ public class Collection implements Serializable {
     //外键
     private Integer userId;
 
-    private String name;
+    private String collectionName;
 
     /**
      * 创建时间

@@ -29,7 +29,7 @@ public class User implements Serializable {
     @TableId(value = "user_id", type = IdType.AUTO)
     private Integer userId;
 
-    private String name;
+    private String userName;
 
     private String email;
 
