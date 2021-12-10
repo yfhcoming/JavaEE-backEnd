@@ -3,6 +3,8 @@ package com.javaee.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.javaee.framework.enums.AppCode;
+import com.javaee.framework.exception.APIException;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.service.AudioService;
@@ -43,6 +45,11 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     };
 
     public BigDecimal findScoreById(Integer audioId){
+        // TODO 验证音频是否有评分
+        System.out.println(isAudioIn(audioId));
+        if(!isAudioIn(audioId)){
+            throw new APIException(AppCode.AUDIO_NOT_EXIST, "音频不存在：audioId - " + audioId);
+        }
         List<BigDecimal> allScores = audioMapper.findAllScoresById(audioId);
         BigDecimal average = allScores.stream().map(vo -> ObjectUtils.isEmpty(vo) ? new BigDecimal(0):vo)
                 .reduce(BigDecimal.ZERO, BigDecimal::add).divide(BigDecimal.valueOf(allScores.size()), 2, BigDecimal.ROUND_HALF_UP);

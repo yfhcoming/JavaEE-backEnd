@@ -12,6 +12,8 @@ public class CommentPo {
     // 外键
     private Integer userId;
 
+    private String name;
+
     private String content;
 
     private LocalDateTime createTime;
