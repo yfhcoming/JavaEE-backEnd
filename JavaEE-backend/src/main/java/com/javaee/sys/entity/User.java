@@ -37,6 +37,8 @@ public class User implements Serializable {
 
     private String telephone;
 
+    private String photo_url;
+
     /**
      * 创建时间
      */

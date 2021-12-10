@@ -145,7 +145,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
             audioMapper.insert(audio);
             return true;
         }catch (Exception e){
-            throw new APIException("音频插入数据库失败");
+            throw new APIException(AppCode.AUDIO_INSERT_FAIL);
         }
     }
 
