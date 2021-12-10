@@ -5,10 +5,12 @@ import com.javaee.sys.entity.Audio;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
+import com.javaee.sys.vo.audio.AddAudioVo;
 import com.javaee.sys.vo.audio.getOneVo;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -87,5 +89,12 @@ public class AudioController {
     @ApiOperation(value = "delete audio by id")
     public boolean deleteAudio(Integer id){
         return audioService.deleteAudio(id);
+    }
+
+    @PostMapping("/upload")
+    @ApiOperation(value = "upload audio file")
+    public boolean audioUpload(@Validated AddAudioVo addAudioVo)
+    {
+        return audioService.uploadAudio(addAudioVo);
     }
 }

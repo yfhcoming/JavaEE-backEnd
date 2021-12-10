@@ -3,6 +3,7 @@ package com.javaee.sys.service;
 import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.javaee.sys.po.AudioPo;
+import com.javaee.sys.vo.audio.AddAudioVo;
 import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,5 +40,5 @@ public interface AudioService extends IService<Audio> {
 
     boolean deleteAudio(Integer id);
 
-    boolean deleteByAudioId(Integer id);
+    boolean uploadAudio(AddAudioVo addAudioVo);
 }

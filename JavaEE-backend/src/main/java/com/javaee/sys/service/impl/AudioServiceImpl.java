@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
+import com.javaee.framework.utils.QiNiuUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.UserHasAudio;
 import com.javaee.sys.mapper.AudioMapper;
@@ -14,10 +15,13 @@ import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.po.CommentPo;
 import com.javaee.sys.service.AudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.javaee.sys.vo.audio.AddAudioVo;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,9 +41,6 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     @Autowired
     AudioMapper audioMapper;
-
-    @Autowired
-    UserHasAudioMapper userHasAudioMapper;
 
     public boolean isAudioIn(Integer audioId){
         LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
@@ -118,19 +119,33 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         if(isAudioIn(id))
         {
             String key=audioMapper.selectById(id).getQiniuLocation().substring(36);
-            if(deleteByAudioId(id)&&audioMapper.deleteById(id)>0&&deleteFromQN(key)) return true;
+            if(audioMapper.deleteById(id)>0&&deleteFromQN(key)) return true;
             else return false;
-
         }
         else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }
 
     @Override
-    public boolean deleteByAudioId(Integer id){
-        LambdaQueryWrapper<UserHasAudio> wrapper=new LambdaQueryWrapper<>();
-        wrapper.eq(UserHasAudio::getAudioId,id);
-        if(userHasAudioMapper.delete(wrapper)>0) return true;
-        else return false;
+    public boolean uploadAudio(AddAudioVo addAudioVo)
+    {
+        String url;
+        try {
+            InputStream fileInputStream= addAudioVo.getMultipartFile().getInputStream();
+            url= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
+        } catch (IOException e) {
+            throw new APIException(AppCode.FILE_UPLOAD_FAIL);
+        }
+        Audio audio=new Audio();
+        audio.setAudioName(addAudioVo.getName());
+        audio.setQiniuLocation(url);
+        audio.setUserId(addAudioVo.getId());
+        try
+        {
+            audioMapper.insert(audio);
+            return true;
+        }catch (Exception e){
+            throw new APIException("音频插入数据库失败");
+        }
     }
 
 }

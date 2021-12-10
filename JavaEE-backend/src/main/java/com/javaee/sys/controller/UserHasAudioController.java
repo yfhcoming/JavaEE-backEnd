@@ -22,13 +22,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/audio")
 public class UserHasAudioController {
-
-    @Autowired
-    UserHasAudioService userHasAudioService;
-
-    @PostMapping("/upload")
-    public boolean audioUpload(@Validated AddAudioVo addAudioVo)
-    {
-        return userHasAudioService.uploadAudio(addAudioVo);
-    }
 }
