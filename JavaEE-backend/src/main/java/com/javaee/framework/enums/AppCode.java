@@ -34,7 +34,6 @@ public enum AppCode implements StatusCode {
     USER_INFO_GET_FAIL(2037,"用户信息获取失败"),
     SEND_EMAIL_FAIL(2038,"发送邮件失败"),
     VERIFICATION_CODE_ERROR(2039,"验证码错误"),
-    VERIFICATION_CODE_TABLE_NOT_EXIST(2040,"验证码表不存在"),
 
     //文件相关code
     FILE_UPLOAD_FAIL(2050,"文件上传失败"),

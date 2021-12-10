@@ -17,9 +17,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -78,20 +76,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         else if(user2!=null) throw new APIException(AppCode.TELEPHONE_HAS_EXIST);
         else
         {
-            String verificationCode=codeMap.get(registerVo.getEmail());
-            if(verificationCode!=null)
+            if(codeMap.get(registerVo.getEmail()).equals(registerVo.getCode()))
             {
-                if(verificationCode.equals(registerVo.getCode()))
+                boolean result=this.save(BeanConvertUtils.convertTo(registerVo,User::new));
+                if (result)
                 {
-                    boolean result=this.save(BeanConvertUtils.convertTo(registerVo,User::new));
-                    if (result)
-                    {
-                        codeMap.remove(registerVo.getEmail());
-                        return "注册成功！";
-                    }
-                    else throw new APIException(AppCode.REGISTER_FAIL);
+                    codeMap.remove(registerVo.getEmail());
+                    return "注册成功！";
                 }
-                else throw new APIException(AppCode.VERIFICATION_CODE_ERROR);
+                else throw new APIException(AppCode.REGISTER_FAIL);
             }
             else throw new APIException(AppCode.VERIFICATION_CODE_ERROR);
         }

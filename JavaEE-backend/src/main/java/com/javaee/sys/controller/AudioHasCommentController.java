@@ -34,7 +34,7 @@ public class AudioHasCommentController {
 
     @PostMapping("/addCommentByUser")
     @ApiOperation(value = "add a comment with a userId")
-    public boolean addCommentByUser(@Validated addCommentVo vo){
+    public boolean addCommentByUser(@RequestBody @Validated addCommentVo vo){
         return audioHasCommentService.addCommentByUser(vo);
     }
 
