@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
+import com.javaee.framework.utils.QiNiuUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.User;
 import com.javaee.sys.mapper.UserMapper;
@@ -17,7 +18,12 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -54,15 +60,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String userLogin(LoginVo loginVo){
+    public Integer userLogin(LoginVo loginVo){
         User user1=getByEmail(loginVo.getLoginKey());
         User user2=getByTelephone(loginVo.getLoginKey());
         if(user1!=null){
-            if(user1.getPassword().equals(loginVo.getPassword())) return "登陆成功！";
+            if(user1.getPassword().equals(loginVo.getPassword())) return user1.getUserId();
             else throw new APIException(AppCode.PASSWORD_ERROR);
         }
         else if(user2!=null){
-            if(user2.getPassword().equals(loginVo.getPassword())) return "登陆成功！";
+            if(user2.getPassword().equals(loginVo.getPassword())) return user2.getUserId();
             else throw new APIException(AppCode.PASSWORD_ERROR);
         }
         else throw new APIException(AppCode.USER_NOT_EXIST);
@@ -76,15 +82,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         else if(user2!=null) throw new APIException(AppCode.TELEPHONE_HAS_EXIST);
         else
         {
-            if(codeMap.get(registerVo.getEmail()).equals(registerVo.getCode()))
+            String verificationCode=codeMap.get(registerVo.getEmail());
+            if(verificationCode!=null)
             {
-                boolean result=this.save(BeanConvertUtils.convertTo(registerVo,User::new));
-                if (result)
+                if(verificationCode.equals(registerVo.getCode()))
                 {
-                    codeMap.remove(registerVo.getEmail());
-                    return "注册成功！";
+                    boolean result=this.save(BeanConvertUtils.convertTo(registerVo,User::new));
+                    if (result)
+                    {
+                        codeMap.remove(registerVo.getEmail());
+                        return "注册成功！";
+                    }
+                    else throw new APIException(AppCode.REGISTER_FAIL);
                 }
-                else throw new APIException(AppCode.REGISTER_FAIL);
+                else throw new APIException(AppCode.VERIFICATION_CODE_ERROR);
             }
             else throw new APIException(AppCode.VERIFICATION_CODE_ERROR);
         }
@@ -113,14 +124,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public String infoUpdate(InfoUpdateVo infoUpdateVo){
         User user=this.getById(infoUpdateVo.getId());
         if(user!=null){
-            LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
-            wrapper.eq(User::getUserId,infoUpdateVo.getId());
-            User user1=new User();
-            user1.setEmail(infoUpdateVo.getEmail());
-            user1.setTelephone(infoUpdateVo.getTelephone());
-            boolean result= this.update(user1,wrapper);
-            if(result) return "用户信息修改成功！";
-            else throw new APIException(AppCode.USER_INFO_UPDATE_FAIL);
+            if(getByTelephone(infoUpdateVo.getTelephone())==null)
+            {
+                LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
+                wrapper.eq(User::getUserId,infoUpdateVo.getId());
+                User user1=new User();
+                user1.setUserName(infoUpdateVo.getUserName());
+                user1.setTelephone(infoUpdateVo.getTelephone());
+                boolean result= this.update(user1,wrapper);
+                if(result) return "用户信息修改成功！";
+                else throw new APIException(AppCode.USER_INFO_UPDATE_FAIL);
+            }
+            else throw new APIException(AppCode.TELEPHONE_HAS_EXIST);
         }
         else throw new APIException(AppCode.USER_NOT_EXIST);
     }
@@ -182,5 +197,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> wrapper1=new LambdaQueryWrapper<>();
         wrapper1.eq(User::getTelephone,telephone);
         return userMapper.selectOne(wrapper1);
+    }
+
+    @Override
+    public boolean uploadPhoto(Integer userId, MultipartFile file){
+        if(isUserIn(userId))
+        {
+            String url;
+            try {
+                InputStream fileInputStream= file.getInputStream();
+                url= QiNiuUtils.upLoad(fileInputStream, file.getName());
+            } catch (IOException e) {
+                throw new APIException(AppCode.FILE_UPLOAD_FAIL);
+            }
+            LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
+            wrapper.eq(User::getUserId,userId);
+            User user1=new User();
+            user1.setPhoto_url(url);
+            if(userMapper.update(user1,wrapper)>0) return true;
+            else throw new APIException(AppCode.USER_PHOTO_UPDATE_FAIL);
+        }
+        else throw new APIException(AppCode.USER_NOT_EXIST);
     }
 }
