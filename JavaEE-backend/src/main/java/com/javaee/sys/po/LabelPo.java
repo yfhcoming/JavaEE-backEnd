@@ -7,5 +7,5 @@ public class LabelPo {
 
     private Integer labelId;
 
-    private String name;
+    private String labelName;
 }

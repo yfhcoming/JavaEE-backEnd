@@ -12,7 +12,7 @@ public class AudioPo {
 
     private Integer audioId;
 
-    private String name;
+    private String audioName;
 
     private BigDecimal score;
 
