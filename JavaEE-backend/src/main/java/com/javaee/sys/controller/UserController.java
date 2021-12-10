@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "login by email or telephone")
-    public String Login(@Validated@RequestBody LoginVo loginVo)
+    public Integer Login(@Validated@RequestBody LoginVo loginVo)
     {
         return userService.userLogin(loginVo);
     }

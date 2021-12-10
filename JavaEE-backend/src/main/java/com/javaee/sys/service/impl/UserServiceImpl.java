@@ -56,15 +56,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public String userLogin(LoginVo loginVo){
+    public Integer userLogin(LoginVo loginVo){
         User user1=getByEmail(loginVo.getLoginKey());
         User user2=getByTelephone(loginVo.getLoginKey());
         if(user1!=null){
-            if(user1.getPassword().equals(loginVo.getPassword())) return "登陆成功！";
+            if(user1.getPassword().equals(loginVo.getPassword())) return user1.getUserId();
             else throw new APIException(AppCode.PASSWORD_ERROR);
         }
         else if(user2!=null){
-            if(user2.getPassword().equals(loginVo.getPassword())) return "登陆成功！";
+            if(user2.getPassword().equals(loginVo.getPassword())) return user2.getUserId();
             else throw new APIException(AppCode.PASSWORD_ERROR);
         }
         else throw new APIException(AppCode.USER_NOT_EXIST);
