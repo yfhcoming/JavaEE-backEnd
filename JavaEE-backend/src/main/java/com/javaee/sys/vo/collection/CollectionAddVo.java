@@ -15,6 +15,6 @@ public class CollectionAddVo {
     private Integer userId;
 
     @NotBlank(message = "收藏夹名称不允许为空")
-    private String name;
+    private String collectionName;
 
 }
