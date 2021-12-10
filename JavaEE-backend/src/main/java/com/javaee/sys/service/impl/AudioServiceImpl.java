@@ -103,7 +103,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     public boolean deleteAudio(Integer id){
         if(isAudioIn(id))
         {
-            String key=audioMapper.selectById(id).getQiniuLocation();
+            String key=audioMapper.selectById(id).getQiniuLocation().substring(36);
             if(deleteByAudioId(id)&&audioMapper.deleteById(id)>0&&deleteFromQN(key)) return true;
             else return false;
 

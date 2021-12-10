@@ -37,6 +37,7 @@ public enum AppCode implements StatusCode {
 
     //文件相关code
     FILE_UPLOAD_FAIL(2050,"文件上传失败"),
+    AUDIO_DELETE_FAIL(2051,"音频删除失败"),
     ;
 
     private int code;
