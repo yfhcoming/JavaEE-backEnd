@@ -48,7 +48,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
     {
         LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Collection::getUserId, dto.getUserId())
-                .eq(Collection::getCollectionName,dto.getName());
+                .eq(Collection::getCollectionName,dto.getCollectionName());
         Integer integer = collectionMapper.selectCount(wrapper);
         boolean result = (integer == 0)?false:true;
         return result;
@@ -62,7 +62,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         }
         if(this.isUserHasCollectionIn(dto)){
             throw new APIException(AppCode.USER_HAS_COLLECTION_HAS_IN, "用户已有该收藏夹：userId - " + dto.getUserId()
-                    +", name - " + dto.getName());
+                    +", name - " + dto.getCollectionName());
         }
 
         return save(BeanConvertUtils.convertTo(dto, Collection::new));
