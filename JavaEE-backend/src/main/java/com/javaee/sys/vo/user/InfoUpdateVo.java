@@ -11,8 +11,8 @@ public class InfoUpdateVo {
     @NotNull(message = "ID不能为空！")
     private Integer id;
     //新的email
-    @NotEmpty(message = "邮箱不能为空！")
-    private String email;
+    @NotEmpty(message = "名称不能为空！")
+    private String userName;
     //新的telephone
     @NotEmpty(message = "手机不能为空！")
     private String telephone;

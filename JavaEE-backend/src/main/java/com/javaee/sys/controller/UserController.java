@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import static com.javaee.framework.utils.QiNiuUtils.downLoad;
@@ -28,7 +29,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "login by email or telephone")
-    public String Login(@Validated@RequestBody LoginVo loginVo)
+    public Integer Login(@Validated@RequestBody LoginVo loginVo)
     {
         return userService.userLogin(loginVo);
     }
@@ -74,4 +75,9 @@ public class UserController {
         return userService.checkEmail(email,code);
     }
 
+    @PostMapping("/photoupload")
+    public boolean photoUpload(Integer userId, MultipartFile file)
+    {
+        return userService.uploadPhoto(userId,file);
+    }
 }

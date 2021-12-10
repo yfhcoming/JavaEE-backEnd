@@ -3,6 +3,8 @@ package com.javaee.sys.service;
 import com.javaee.sys.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.javaee.sys.vo.user.*;
+import io.swagger.models.auth.In;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
@@ -14,7 +16,7 @@ import com.javaee.sys.vo.user.*;
  */
 public interface UserService extends IService<User> {
 
-    String userLogin(LoginVo loginVo);
+    Integer userLogin(LoginVo loginVo);
 
     String userRegister(RegisterVo registerVo);
 
@@ -35,4 +37,6 @@ public interface UserService extends IService<User> {
     User getByEmail(String email);
 
     User getByTelephone(String telephone);
+
+    boolean uploadPhoto(Integer userId, MultipartFile file);
 }
