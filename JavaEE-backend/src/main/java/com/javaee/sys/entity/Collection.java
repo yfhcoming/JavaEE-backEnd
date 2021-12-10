@@ -29,6 +29,9 @@ public class Collection implements Serializable {
     @TableId(value = "collection_id", type = IdType.AUTO)
     private Integer collectionId;
 
+    //外键
+    private Integer userId;
+
     private String name;
 
     /**

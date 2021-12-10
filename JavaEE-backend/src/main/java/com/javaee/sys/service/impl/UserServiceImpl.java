@@ -45,6 +45,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private Map<String,String> codeMap=new HashMap<>();
 
     @Override
+    public boolean isUserIn(Integer userId){
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUserId, userId);
+        Integer integer = userMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
+    }
+
+    @Override
     public String userLogin(LoginVo loginVo){
         User user1=getByEmail(loginVo.getLoginKey());
         User user2=getByTelephone(loginVo.getLoginKey());
@@ -159,15 +168,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             str.append(random.nextInt(10));
         }
         return str.toString();
-    }
-
-    @Override
-    public boolean isUserIn(Integer userId){
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getUserId, userId);
-        Integer integer = userMapper.selectCount(wrapper);
-        boolean result = (integer == 0)?false:true;
-        return result;
     }
 
     @Override

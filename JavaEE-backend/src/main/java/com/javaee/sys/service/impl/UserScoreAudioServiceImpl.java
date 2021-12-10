@@ -28,8 +28,8 @@ import org.springframework.stereotype.Service;
 public class UserScoreAudioServiceImpl extends ServiceImpl<UserScoreAudioMapper, UserScoreAudio> implements UserScoreAudioService {
 
     @Autowired
-
     UserScoreAudioMapper userScoreAudioMapper;
+
     @Autowired
     UserService userService;
 

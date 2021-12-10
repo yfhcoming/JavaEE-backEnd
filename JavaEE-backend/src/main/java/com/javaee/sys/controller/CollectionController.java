@@ -8,7 +8,11 @@ import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.vo.collection.CollectionAddVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p>
@@ -27,15 +31,22 @@ public class CollectionController {
 
     @PostMapping("/add")
     @ApiOperation(value = "set a new collection")
-    public boolean addCollection(CollectionAddVo vo){
-        return collectionService.save(BeanConvertUtils.convertTo(vo, Collection::new));
+    public boolean addCollection(@Validated CollectionAddVo vo){
+
+        return collectionService.addCollection(vo);
     }
 
     @GetMapping("/find/{collectionId}")
     @ApiOperation(value = "find the collection by id")
-    public Collection findById(@PathVariable("collectionId")Integer collectionId)
+    public Collection findById(@Validated @NotNull @PathVariable("collectionId")Integer collectionId)
     {
         return collectionService.getById(collectionId);
+    }
+
+    @GetMapping("/findAll")
+    @ApiOperation(value = "find all collection")
+    public List findAllCollections() {
+        return collectionService.findAllCollections();
     }
 
 

@@ -2,7 +2,11 @@ package com.javaee.sys.service;
 
 import com.javaee.sys.entity.Collection;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.javaee.sys.vo.collection.CollectionAddVo;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface CollectionService extends IService<Collection> {
 
     boolean isCollectionIn(Integer collectionId);
+
+    boolean addCollection(CollectionAddVo dto);
+
+    List findAllCollections();
 }

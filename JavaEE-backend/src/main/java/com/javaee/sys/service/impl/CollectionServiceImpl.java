@@ -1,13 +1,21 @@
 package com.javaee.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.javaee.framework.enums.AppCode;
+import com.javaee.framework.exception.APIException;
+import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.Collection;
 import com.javaee.sys.mapper.CollectionMapper;
 import com.javaee.sys.service.CollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.javaee.sys.service.UserService;
+import com.javaee.sys.vo.collection.CollectionAddVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
 
 /**
  * <p>
@@ -23,6 +31,9 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
     @Autowired
     CollectionMapper collectionMapper;
 
+    @Autowired
+    UserService userService;
+
     public boolean isCollectionIn(Integer collectionId){
         LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Collection::getCollectionId, collectionId);
@@ -30,4 +41,18 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         boolean result = (integer == 0)?false:true;
         return result;
     }
+
+    public boolean addCollection(@Validated CollectionAddVo dto){
+        if(!userService.isUserIn(dto.getUserId())){
+            throw new APIException(AppCode.USER_NOT_EXIST, "用户不存在：userId - " + dto.getUserId());
+        }
+        return save(BeanConvertUtils.convertTo(dto, Collection::new));
+    }
+
+    public List findAllCollections(){
+        LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
+        List<Collection> collections = collectionMapper.selectList(null);
+        return collections;
+    }
+
 }
