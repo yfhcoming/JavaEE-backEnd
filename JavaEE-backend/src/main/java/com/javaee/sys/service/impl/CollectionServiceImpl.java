@@ -62,7 +62,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         }
         if(this.isUserHasCollectionIn(dto)){
             throw new APIException(AppCode.USER_HAS_COLLECTION_HAS_IN, "用户已有该收藏夹：userId - " + dto.getUserId()
-                    +", collectionName - " + dto.getCollectionName());
+                    +", name - " + dto.getCollectionName());
         }
 
         return save(BeanConvertUtils.convertTo(dto, Collection::new));
