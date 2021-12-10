@@ -97,4 +97,10 @@ public class AudioController {
     {
         return audioService.uploadAudio(addAudioVo);
     }
+
+    @GetMapping("/get/{userId}")
+    @ApiOperation(value = "get all audio by user ID")
+    public List findByUserId(@PathVariable("userId") Integer userId){
+        return audioService.findByUserId(userId);
+    }
 }

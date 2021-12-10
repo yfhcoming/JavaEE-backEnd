@@ -8,6 +8,7 @@ import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.framework.utils.QiNiuUtils;
 import com.javaee.sys.entity.Audio;
+import com.javaee.sys.entity.User;
 import com.javaee.sys.entity.UserHasAudio;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.mapper.UserHasAudioMapper;
@@ -148,4 +149,10 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         }
     }
 
+    @Override
+    public List findByUserId(Integer userId){
+        LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
+        List<Audio> audioList=audioMapper.selectList(wrapper);
+        return audioList;
+    }
 }

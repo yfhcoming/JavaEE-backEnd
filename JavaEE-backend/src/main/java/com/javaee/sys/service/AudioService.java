@@ -41,4 +41,6 @@ public interface AudioService extends IService<Audio> {
     boolean deleteAudio(Integer id);
 
     boolean uploadAudio(AddAudioVo addAudioVo);
+
+    List findByUserId(Integer userId);
 }
