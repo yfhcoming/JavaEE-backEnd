@@ -6,14 +6,20 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.sys.entity.Audio;
+import com.javaee.sys.entity.UserHasAudio;
 import com.javaee.sys.mapper.AudioMapper;
+import com.javaee.sys.mapper.UserHasAudioMapper;
 import com.javaee.sys.service.AudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import static com.javaee.framework.utils.QiNiuUtils.deleteFromQN;
+import static com.javaee.framework.utils.QiNiuUtils.downLoad;
 
 /**
  * <p>
@@ -28,6 +34,9 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     @Autowired
     AudioMapper audioMapper;
+
+    @Autowired
+    UserHasAudioMapper userHasAudioMapper;
 
     public boolean isAudioIn(Integer audioId){
         LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
@@ -67,6 +76,47 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     public Audio getRandomAudio(){
         Audio randomAudio = audioMapper.getRandomAudio();
         return randomAudio;
+    }
+
+    @Override
+    public String audioDisplay(Integer id){
+        if(isAudioIn(id))
+        {
+            Audio audio=audioMapper.selectById(id);
+            return audio.getQiniuLocation();
+        }
+        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
+    }
+
+    @Override
+    public String audioDownload(Integer id){
+        if(isAudioIn(id))
+        {
+            Audio audio=audioMapper.selectById(id);
+            String url=downLoad(audio.getQiniuLocation());
+            return url;
+        }
+        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
+    }
+
+    @Override
+    public boolean deleteAudio(Integer id){
+        if(isAudioIn(id))
+        {
+            String key=audioMapper.selectById(id).getQiniuLocation();
+            if(deleteByAudioId(id)&&audioMapper.deleteById(id)>0&&deleteFromQN(key)) return true;
+            else return false;
+
+        }
+        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
+    }
+
+    @Override
+    public boolean deleteByAudioId(Integer id){
+        LambdaQueryWrapper<UserHasAudio> wrapper=new LambdaQueryWrapper<>();
+        wrapper.eq(UserHasAudio::getAudioId,id);
+        if(userHasAudioMapper.delete(wrapper)>0) return true;
+        else return false;
     }
 
 }

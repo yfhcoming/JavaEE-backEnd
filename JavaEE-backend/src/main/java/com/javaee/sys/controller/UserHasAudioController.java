@@ -5,6 +5,7 @@ import com.javaee.sys.entity.UserHasAudio;
 import com.javaee.sys.service.UserHasAudioService;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,7 +27,7 @@ public class UserHasAudioController {
     UserHasAudioService userHasAudioService;
 
     @PostMapping("/upload")
-    public boolean audioUpload(AddAudioVo addAudioVo)
+    public boolean audioUpload(@Validated AddAudioVo addAudioVo)
     {
         return userHasAudioService.uploadAudio(addAudioVo);
     }
