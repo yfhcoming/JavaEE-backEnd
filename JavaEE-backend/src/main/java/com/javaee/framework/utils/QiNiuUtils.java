@@ -12,16 +12,8 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import net.bytebuddy.utility.RandomString;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.ResponseBody;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.util.Map;
 import java.util.Random;
 
 //七牛云服务
@@ -51,8 +43,7 @@ public class QiNiuUtils {
             Response response = uploadManager.put(file, key, upToken, null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-            String path = domain + "/" + putRet.key;
-            return path;
+            return domain + "/" + putRet.key;
         } catch (QiniuException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
@@ -61,59 +52,21 @@ public class QiNiuUtils {
     public static String downLoad(String locateUrl)
     {
         Auth auth = Auth.create(accessKey, secretKey);
-        String finalUrl = auth.privateDownloadUrl(locateUrl);
-        return finalUrl;
+        return auth.privateDownloadUrl(locateUrl);
     }
 
     public static boolean deleteFromQN(String key){
         Configuration cfg = new Configuration(Zone.zone0());
         Auth auth = Auth.create(accessKey, secretKey);
         BucketManager bucketManager=new BucketManager(auth,cfg);
-        Response response = null;
+        Response response;
         try {
             response = bucketManager.delete(bucketName, key);
         } catch (QiniuException e) {
-            e.printStackTrace();
-        }
-        int retry = 0;
-        while (response.needRetry() && retry++ < 3) {
-            try {
-                response = bucketManager.delete(bucketName, key);
-            } catch (QiniuException e) {
-                e.printStackTrace();
-            }
+            throw new APIException(AppCode.AUDIO_DELETE_FAIL);
         }
         return response.statusCode == 200;
     }
-
-
-//    public static byte[] downloadFromQNY() {
-//        String url = "http://r3tw40sg8.hd-bkt.clouddn.com/audio12981665136";
-//        OkHttpClient client = new OkHttpClient();
-//        Request request = new Request.Builder().url(url).build();
-//        try {
-//            okhttp3.Response resp = client.newCall(request).execute();
-//            if (resp.isSuccessful()) {
-//                ResponseBody body = resp.body();
-//                InputStream inputStream = body.byteStream();
-//                ByteArrayOutputStream writer = new ByteArrayOutputStream();
-//                byte[] buff = new byte[1024 * 2];
-//                int len = 0;
-//                try {
-//                    while ((len = inputStream.read(buff)) != -1) {
-//                        writer.write(buff, 0, len);
-//                    }
-//                    inputStream.close();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                return writer.toByteArray();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 
 
     public static String randomString(){
