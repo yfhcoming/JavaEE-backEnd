@@ -7,6 +7,7 @@ import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.Collection;
 import com.javaee.sys.entity.CollectionHasAudio;
+import com.javaee.sys.entity.User;
 import com.javaee.sys.mapper.CollectionMapper;
 import com.javaee.sys.service.CollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -74,4 +75,16 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         return collections;
     }
 
+    @Override
+    public List findByUserId(Integer userId){
+        if(userService.isUserIn(userId))
+        {
+            LambdaQueryWrapper<Collection> wrapper=new LambdaQueryWrapper<>();
+            wrapper.eq(Collection::getUserId,userId);
+            List<Collection> collectionList=collectionMapper.selectList(wrapper);
+            if(collectionList!=null) return collectionList;
+            else throw new APIException(AppCode.USER_HAS_NO_COLLECTION);
+        }
+        else throw new APIException(AppCode.USER_NOT_EXIST);
+    }
 }

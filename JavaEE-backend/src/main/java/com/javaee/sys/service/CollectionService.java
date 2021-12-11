@@ -23,4 +23,6 @@ public interface CollectionService extends IService<Collection> {
     boolean addCollection(CollectionAddVo dto);
 
     List findAllCollections();
+
+    List findByUserId(Integer userId);
 }

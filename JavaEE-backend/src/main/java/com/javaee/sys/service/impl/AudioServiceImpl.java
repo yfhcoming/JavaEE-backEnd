@@ -16,6 +16,7 @@ import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.po.CommentPo;
 import com.javaee.sys.service.AudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     @Autowired
     AudioMapper audioMapper;
+
+    @Autowired
+    UserService userService;
 
     public boolean isAudioIn(Integer audioId){
         LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
@@ -151,8 +155,13 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     @Override
     public List findByUserId(Integer userId){
-        LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
-        List<Audio> audioList=audioMapper.selectList(wrapper);
-        return audioList;
+        if(userService.isUserIn(userId)){
+            LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
+            wrapper.eq(Audio::getUserId,userId);
+            List<Audio> audioList=audioMapper.selectList(wrapper);
+            if(audioList==null) throw new APIException(AppCode.USER_HAS_NO_AUDIO);
+            else return audioList;
+        }
+        else throw new APIException(AppCode.USER_NOT_EXIST);
     }
 }

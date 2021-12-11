@@ -7,6 +7,7 @@ import com.javaee.sys.entity.Collection;
 import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.vo.collection.CollectionAddVo;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,10 @@ public class CollectionController {
         return collectionService.findAllCollections();
     }
 
-
-
-
+    @GetMapping("/get/{userid}")
+    @ApiOperation(value = "get collections by user ID")
+    public List getByUserId(@PathVariable("userid") Integer userId)
+    {
+        return collectionService.findByUserId(userId);
+    }
 }
