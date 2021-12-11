@@ -32,6 +32,9 @@ public class Comment implements Serializable {
     // 外键
     private Integer userId;
 
+    // 外键
+    private Integer audioId;
+
     private String content;
 
     /**

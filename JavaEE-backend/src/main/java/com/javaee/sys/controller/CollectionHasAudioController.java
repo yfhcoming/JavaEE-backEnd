@@ -32,14 +32,14 @@ public class CollectionHasAudioController {
 
     @PostMapping("/addAudio")
     @ApiOperation(value = "add an audio into the collection")
-    public boolean addAudio(@Validated CollectionHasAudioVo vo)
+    public boolean addAudio(@RequestBody @Validated CollectionHasAudioVo vo)
     {
         return collectionHasAudioService.addAudio(vo);
     }
 
     @PostMapping("/deleteAudio")
     @ApiOperation(value = "delete an audio in the collection")
-    public boolean deleteAudio(@Validated CollectionHasAudioVo vo){
+    public boolean deleteAudio(@RequestBody@Validated CollectionHasAudioVo vo){
         return collectionHasAudioService.deleteAudio(vo);
     }
 

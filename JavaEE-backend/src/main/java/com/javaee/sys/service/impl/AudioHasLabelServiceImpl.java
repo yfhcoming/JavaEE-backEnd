@@ -75,7 +75,13 @@ public class AudioHasLabelServiceImpl extends ServiceImpl<AudioHasLabelMapper, A
     }
 
     public List findAllLabelsById(Integer audioId) {
+        if(!audioService.isAudioIn(audioId)){
+            throw new APIException(AppCode.AUDIO_NOT_EXIST, "音频不存在：audioId - " + audioId);
+        }
         List<LabelPo> labels = audioHasLabelMapper.findAllLabelsById(audioId);
+//        if(labels == null || labels.isEmpty()){
+//            throw new APIException(AppCode.AUDIO_HAS_LABEL_NOT_IN, "音频无标签：audioId - " + audioId);
+//        }
         return labels;
     }
 

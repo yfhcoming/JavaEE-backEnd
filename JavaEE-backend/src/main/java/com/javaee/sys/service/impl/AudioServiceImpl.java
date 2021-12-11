@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.javaee.framework.utils.QiNiuUtils.deleteFromQN;
@@ -57,19 +58,15 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     public List findAllAudios()
     {
-        LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
-        List<Audio> audioList = audioMapper.selectList(null);
-        return audioList;
+        List<AudioPo> allAudios = audioMapper.findAllAudios();
+        return allAudios;
     };
 
     public AudioPo findById(Integer audioId){
-        AudioPo audioPo = audioMapper.findById(audioId);
-        if(audioPo == null){
-            Audio auto = this.getById(audioId);
-            AudioPo audioPoTMP = BeanConvertUtils.convertTo(auto, AudioPo::new);
-            return audioPoTMP;
-
+        if(!isAudioIn(audioId)){
+            throw new APIException(AppCode.AUDIO_NOT_EXIST, "音频不存在：audioId - " + audioId);
         }
+        AudioPo audioPo = audioMapper.findById(audioId);
         return audioPo;
     }
 

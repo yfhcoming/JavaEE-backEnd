@@ -24,7 +24,7 @@ public interface AudioHasLabelMapper extends BaseMapper<AudioHasLabel> {
     @Results(id = "findLabelsById",
             value = {
             @Result(property = "labelId", column = "label_id", id = true),
-            @Result(property = "label_name", column = "labelName"),
+            @Result(property = "labelName", column = "label_name"),
             })
     @Select("select L.label_id,L.label_name from audio_has_label as H join audio as A on H.audio_id=A.audio_id join label as L on H.label_id=L.label_id where A.audio_id=#{audioId}")
     List<LabelPo> findAllLabelsById(@Param("audioId")Integer audioId);

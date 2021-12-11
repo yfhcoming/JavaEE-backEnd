@@ -4,6 +4,7 @@ package com.javaee.sys.controller;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.Collection;
+import com.javaee.sys.po.CollectionPo;
 import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.vo.collection.CollectionAddVo;
 import io.swagger.annotations.ApiOperation;
@@ -39,9 +40,9 @@ public class CollectionController {
 
     @GetMapping("/find/{collectionId}")
     @ApiOperation(value = "find the collection by id")
-    public Collection findById(@Validated @NotNull @PathVariable("collectionId")Integer collectionId)
+    public CollectionPo findById(@Validated @NotNull @PathVariable("collectionId")Integer collectionId)
     {
-        return collectionService.getById(collectionId);
+        return collectionService.findById(collectionId);
     }
 
     @GetMapping("/findAll")

@@ -6,6 +6,7 @@ import com.javaee.sys.vo.audio.AudioHasLabelVo;
 import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,7 +30,7 @@ public class AudioHasLabelController {
 
     @PostMapping("/addLabel")
     @ApiOperation(value = "add an label to the audio")
-    public boolean addLabel(AudioHasLabelVo vo)
+    public boolean addLabel(@RequestBody @Validated AudioHasLabelVo vo)
     {
         return audioHasLabelService.addLabel(vo);
     }

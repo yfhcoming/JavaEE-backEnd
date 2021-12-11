@@ -9,6 +9,8 @@ import com.javaee.sys.entity.Collection;
 import com.javaee.sys.entity.CollectionHasAudio;
 import com.javaee.sys.entity.User;
 import com.javaee.sys.mapper.CollectionMapper;
+import com.javaee.sys.po.AudioPo;
+import com.javaee.sys.po.CollectionPo;
 import com.javaee.sys.service.CollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.javaee.sys.service.UserService;
@@ -45,6 +47,14 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         return result;
     }
 
+    public CollectionPo findById(Integer collectionId){
+        if(!isCollectionIn(collectionId)){
+            throw new APIException(AppCode.COLLECTION_NOT_EXIST, "收藏夹不存在：collectionId - " + collectionId);
+        }
+        CollectionPo collectionPo = collectionMapper.findById(collectionId);
+        return collectionPo;
+    }
+
     public boolean isUserHasCollectionIn(CollectionAddVo dto)
     {
         LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
@@ -70,9 +80,8 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
     }
 
     public List findAllCollections(){
-        LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
-        List<Collection> collections = collectionMapper.selectList(null);
-        return collections;
+        List<CollectionPo> allCollections = collectionMapper.findAllCollections();
+        return allCollections;
     }
 
     @Override
