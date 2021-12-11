@@ -1,6 +1,8 @@
 package com.javaee.framework.utils;
 
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.http.HttpUtil;
 import com.google.gson.Gson;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
@@ -12,8 +14,10 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.Random;
 
 //七牛云服务
@@ -53,6 +57,27 @@ public class QiNiuUtils {
     {
         Auth auth = Auth.create(accessKey, secretKey);
         return auth.privateDownloadUrl(locateUrl);
+    }
+
+    public static MultipartFile download2(String locateUrl){
+        Auth auth = Auth.create(accessKey, secretKey);
+        String finalUrl =auth.privateDownloadUrl(locateUrl);
+        String fileName=locateUrl.substring(36);
+        HttpUtil.downloadFile(finalUrl, FileUtil.file("D://七牛云"+fileName));
+        File file = new File("D://七牛云/"+fileName);
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        MultipartFile multipartFile = null;
+        try {
+             multipartFile=new MockMultipartFile("copy"+file.getName(),file.getName(),null,fileInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return multipartFile;
     }
 
     public static boolean deleteFromQN(String key){

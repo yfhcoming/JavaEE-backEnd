@@ -12,11 +12,14 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
+
+import static com.javaee.framework.utils.QiNiuUtils.download2;
 
 /**
  * <p>
@@ -102,5 +105,11 @@ public class AudioController {
     @ApiOperation(value = "get all audio by user ID")
     public List findByUserId(@PathVariable("userId") Integer userId){
         return audioService.findByUserId(userId);
+    }
+
+    @GetMapping("get/test")
+    public MultipartFile test(String url)
+    {
+        return download2(url);
     }
 }
