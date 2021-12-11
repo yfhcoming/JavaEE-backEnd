@@ -6,6 +6,8 @@ import com.javaee.sys.vo.user.*;
 import io.swagger.models.auth.In;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * <p>
  *  服务类
@@ -16,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface UserService extends IService<User> {
 
-    Integer userLogin(LoginVo loginVo);
+    Integer userLogin(LoginVo loginVo, HttpSession httpSession);
 
     String userRegister(RegisterVo registerVo);
 

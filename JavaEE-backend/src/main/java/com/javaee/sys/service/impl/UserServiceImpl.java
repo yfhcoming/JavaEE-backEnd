@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,15 +61,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Integer userLogin(LoginVo loginVo){
+    public Integer userLogin(LoginVo loginVo, HttpSession httpSession){
         User user1=getByEmail(loginVo.getLoginKey());
         User user2=getByTelephone(loginVo.getLoginKey());
         if(user1!=null){
-            if(user1.getPassword().equals(loginVo.getPassword())) return user1.getUserId();
+            if(user1.getPassword().equals(loginVo.getPassword()))
+            {
+                httpSession.setAttribute("userId",user1.getUserId());
+                return user1.getUserId();
+            }
             else throw new APIException(AppCode.PASSWORD_ERROR);
         }
         else if(user2!=null){
-            if(user2.getPassword().equals(loginVo.getPassword())) return user2.getUserId();
+            if(user2.getPassword().equals(loginVo.getPassword()))
+            {
+                httpSession.setAttribute("userId",user2.getUserId());
+                return user2.getUserId();
+            }
             else throw new APIException(AppCode.PASSWORD_ERROR);
         }
         else throw new APIException(AppCode.USER_NOT_EXIST);

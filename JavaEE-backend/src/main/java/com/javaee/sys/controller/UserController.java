@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.http.HttpSession;
+
 import static com.javaee.framework.utils.QiNiuUtils.downLoad;
 import static com.javaee.framework.utils.QiNiuUtils.upLoad;
 
@@ -29,9 +31,9 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "login by email or telephone")
-    public Integer Login(@Validated@RequestBody LoginVo loginVo)
+    public Integer Login(@Validated@RequestBody LoginVo loginVo, HttpSession httpSession)
     {
-        return userService.userLogin(loginVo);
+        return userService.userLogin(loginVo,httpSession);
     }
 
     @PostMapping("/register")
