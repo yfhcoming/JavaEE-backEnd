@@ -7,6 +7,7 @@ import com.javaee.sys.vo.collection.CollectionAddVo;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -23,11 +24,9 @@ public interface CollectionService extends IService<Collection> {
 
     boolean isCollectionIn(Integer collectionId);
 
-    boolean addCollection(CollectionAddVo dto);
+    boolean addCollection(CollectionAddVo dto, MultipartFile file);
 
     List findAllCollections();
 
-
     CollectionPo findById(Integer collectionId);
-
 }

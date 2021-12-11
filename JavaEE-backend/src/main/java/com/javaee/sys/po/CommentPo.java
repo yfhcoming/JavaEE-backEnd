@@ -12,7 +12,14 @@ public class CommentPo {
     // 外键
     private Integer userId;
 
+    private String userName;
+
+
     private String content;
+
+    private String photoUrl;
+
+
 
     private LocalDateTime createTime;
 }

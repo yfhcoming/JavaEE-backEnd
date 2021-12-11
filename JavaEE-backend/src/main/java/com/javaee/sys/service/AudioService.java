@@ -4,6 +4,7 @@ import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.vo.audio.AddAudioVo;
+import com.javaee.sys.vo.audio.addCommentVo;
 import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,10 @@ public interface AudioService extends IService<Audio> {
     List searchByName(String name);
 
     Audio getRandomAudio();
+
+    List findAllCommentsById(Integer audioId);
+
+    boolean addCommentByUser(addCommentVo dto);
 
     String audioDisplay(Integer id);
 

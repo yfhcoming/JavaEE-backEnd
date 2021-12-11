@@ -7,17 +7,18 @@ import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.framework.utils.QiNiuUtils;
-import com.javaee.sys.entity.Audio;
-import com.javaee.sys.entity.User;
-import com.javaee.sys.entity.UserHasAudio;
+import com.javaee.sys.entity.*;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.mapper.UserHasAudioMapper;
+import com.javaee.sys.po.AudioHasCommentPo;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.po.CommentPo;
 import com.javaee.sys.service.AudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.javaee.sys.service.CommentService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.audio.AddAudioVo;
+import com.javaee.sys.vo.audio.addCommentVo;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,9 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     @Autowired
     UserService userService;
 
+    @Autowired
+    CommentService commentService;
+
     public boolean isAudioIn(Integer audioId){
         LambdaQueryWrapper<Audio> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Audio::getAudioId, audioId);
@@ -72,7 +76,6 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     public BigDecimal findScoreById(Integer audioId){
         // TODO 验证音频是否有评分
-        System.out.println(isAudioIn(audioId));
         if(!isAudioIn(audioId)){
             throw new APIException(AppCode.AUDIO_NOT_EXIST, "音频不存在：audioId - " + audioId);
         }
@@ -93,6 +96,28 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     public Audio getRandomAudio(){
         Audio randomAudio = audioMapper.getRandomAudio();
         return randomAudio;
+    }
+
+    public List findAllCommentsById(Integer audioId){
+        List<CommentPo> comments = audioMapper.findAllCommentsById(audioId);
+        return comments;
+    }
+
+    public boolean addCommentByUser(addCommentVo dto){
+        // TODO 先判断评论 用户
+        // 先创建评论 (userId )
+        // 在创建audio 拥有评论 表
+        if(!isAudioIn(dto.getAudioId())){
+            throw new APIException(AppCode.AUDIO_NOT_EXIST, "音频不存在：audioId - " + dto.getAudioId());
+        }
+        if(!userService.isUserIn(dto.getUserId())){
+            throw new APIException(AppCode.USER_NOT_EXIST, "用户不存在：userId - " + dto.getUserId());
+        }
+
+        // 测试之后发现 BeanConvertUtils 的功能就是把名称相同的字段进行复制，没有名称相同的字段设置为null
+        Comment comment = BeanConvertUtils.convertTo(dto, Comment::new);
+        commentService.save(comment);
+        return true;
     }
 
     @Override
@@ -152,13 +177,8 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     @Override
     public List findByUserId(Integer userId){
-        if(userService.isUserIn(userId)){
-            LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
-            wrapper.eq(Audio::getUserId,userId);
-            List<Audio> audioList=audioMapper.selectList(wrapper);
-            if(audioList==null) throw new APIException(AppCode.USER_HAS_NO_AUDIO);
-            else return audioList;
-        }
-        else throw new APIException(AppCode.USER_NOT_EXIST);
+        LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
+        List<Audio> audioList=audioMapper.selectList(wrapper);
+        return audioList;
     }
 }

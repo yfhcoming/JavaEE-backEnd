@@ -6,6 +6,7 @@ import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
 import com.javaee.sys.vo.audio.AddAudioVo;
+import com.javaee.sys.vo.audio.addCommentVo;
 import com.javaee.sys.vo.audio.getOneVo;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
@@ -74,6 +75,18 @@ public class AudioController {
     @ApiOperation(value = "get an audio in random")
     public Audio getRandomAudio() {
         return audioService.getRandomAudio();
+    }
+
+    @GetMapping("/findAllCommentsById")
+    @ApiOperation(value = "find all labels of the audio by audioId")
+    public List findAllCommentsById(@RequestParam("audioId") @Valid @NotNull Integer audioId){
+        return audioService.findAllCommentsById(audioId);
+    }
+
+    @PostMapping("/addCommentByUser")
+    @ApiOperation(value = "add a comment with a userId")
+    public boolean addCommentByUser(@RequestBody @Validated addCommentVo vo){
+        return audioService.addCommentByUser(vo);
     }
 
     @GetMapping("/display")

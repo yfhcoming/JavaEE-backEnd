@@ -34,6 +34,8 @@ public class Collection implements Serializable {
 
     private String collectionName;
 
+    private String cover;
+
     /**
      * 创建时间
      */

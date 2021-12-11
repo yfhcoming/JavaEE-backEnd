@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
+import com.javaee.framework.utils.QiNiuUtils;
 import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.Collection;
 import com.javaee.sys.entity.CollectionHasAudio;
@@ -19,7 +20,10 @@ import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -67,7 +71,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
 
 
 
-    public boolean addCollection(@Validated CollectionAddVo dto){
+    public boolean addCollection(@Validated CollectionAddVo dto, MultipartFile file){
         if(!userService.isUserIn(dto.getUserId())){
             throw new APIException(AppCode.USER_NOT_EXIST, "用户不存在：userId - " + dto.getUserId());
         }
@@ -75,8 +79,17 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
             throw new APIException(AppCode.USER_HAS_COLLECTION_HAS_IN, "用户已有该收藏夹：userId - " + dto.getUserId()
                     +", collectionName - " + dto.getCollectionName());
         }
-
-        return save(BeanConvertUtils.convertTo(dto, Collection::new));
+        String cover;
+        try {
+            InputStream fileInputStream= file.getInputStream();
+            cover= QiNiuUtils.upLoad(fileInputStream, file.getName());
+        } catch (IOException e) {
+            throw new APIException(AppCode.FILE_UPLOAD_FAIL);
+        }
+        Collection collection = BeanConvertUtils.convertTo(dto, Collection::new);
+        save(collection);
+        collection.setCover(cover);
+        return true;
     }
 
     public List findAllCollections(){
@@ -84,16 +97,4 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         return allCollections;
     }
 
-    @Override
-    public List findByUserId(Integer userId){
-        if(userService.isUserIn(userId))
-        {
-            LambdaQueryWrapper<Collection> wrapper=new LambdaQueryWrapper<>();
-            wrapper.eq(Collection::getUserId,userId);
-            List<Collection> collectionList=collectionMapper.selectList(wrapper);
-            if(collectionList!=null) return collectionList;
-            else throw new APIException(AppCode.USER_HAS_NO_COLLECTION);
-        }
-        else throw new APIException(AppCode.USER_NOT_EXIST);
-    }
 }

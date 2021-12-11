@@ -10,6 +10,7 @@ import com.javaee.sys.entity.AudioHasLabel;
 import com.javaee.sys.entity.CollectionHasAudio;
 import com.javaee.sys.entity.Label;
 import com.javaee.sys.mapper.AudioHasLabelMapper;
+import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.po.LabelPo;
 import com.javaee.sys.service.AudioHasLabelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -86,7 +87,10 @@ public class AudioHasLabelServiceImpl extends ServiceImpl<AudioHasLabelMapper, A
     }
 
     public List findAllAudiosByLabelId(Integer LabelId){
-        List<String> audiosId = audioHasLabelMapper.findAllAudiosByLabelId(LabelId);
-        return audiosId;
+        if(!labelService.isLabelIn(LabelId)){
+            throw new APIException(AppCode.LABEL_NOT_EXIST, "标签不存在：LabelId - " + LabelId);
+        }
+        List<AudioPo> allAudiosByLabelId = audioHasLabelMapper.findAllAudiosByLabelId(LabelId);
+        return allAudiosByLabelId;
     }
 }

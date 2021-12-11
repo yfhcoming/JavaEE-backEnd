@@ -21,12 +21,7 @@ public enum AppCode implements StatusCode {
     COLLECTION_HAS_AUDIO_HAS_IN(2008,"音频已在收藏夹中"),
     COLLECTION_HAS_AUDIO_NOT_IN(2009,"音频不在收藏夹中"),
     AUDIO_HAS_LABEL_HAS_IN(2010,"音频已有该标签"),
-    USER_HAS_COLLECTION_HAS_IN(2012,"用户已有该收藏夹"),
-    USER_HAS_NO_COLLECTION(2013,"用户没有收藏夹"),
-    USER_HAS_NO_AUDIO(2014,"用户没有音频"),
     AUDIO_HAS_LABEL_NOT_IN(2011,"音频无标签"),
-
-    
     USER_SCORE_AUDIO_HAS_IN(2021,"用户已为该音频打分"),
     USER_HAS_COLLECTION_HAS_IN(2022,"用户已有该收藏夹"),
 

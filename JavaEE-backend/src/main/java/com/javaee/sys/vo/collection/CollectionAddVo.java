@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class CollectionAddVo {
-    // 主键
+    // 外键
     @NotNull
     private Integer userId;
 

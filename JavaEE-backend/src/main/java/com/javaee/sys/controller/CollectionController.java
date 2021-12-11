@@ -8,10 +8,10 @@ import com.javaee.sys.po.CollectionPo;
 import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.vo.collection.CollectionAddVo;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -33,9 +33,9 @@ public class CollectionController {
 
     @PostMapping("/add")
     @ApiOperation(value = "set a new collection")
-    public boolean addCollection(@Validated CollectionAddVo vo){
+    public boolean addCollection(@Validated CollectionAddVo vo, MultipartFile file){
 
-        return collectionService.addCollection(vo);
+        return collectionService.addCollection(vo,file);
     }
 
     @GetMapping("/find/{collectionId}")
@@ -51,10 +51,7 @@ public class CollectionController {
         return collectionService.findAllCollections();
     }
 
-    @GetMapping("/get/{userid}")
-    @ApiOperation(value = "get collections by user ID")
-    public List getByUserId(@PathVariable("userid") Integer userId)
-    {
-        return collectionService.findByUserId(userId);
-    }
+
+
+
 }
