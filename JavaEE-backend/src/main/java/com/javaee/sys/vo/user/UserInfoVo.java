@@ -19,4 +19,6 @@ public class UserInfoVo {
 
     @NotEmpty(message = "信息创建时间不能为空！")
     private LocalDateTime createTime;
+
+    private String photo_url;
 }
