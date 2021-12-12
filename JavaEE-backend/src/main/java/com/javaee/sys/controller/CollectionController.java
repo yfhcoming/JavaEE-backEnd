@@ -57,9 +57,9 @@ public class CollectionController {
         return collectionService.findAllSortedByTime();
     }
 
-    @GetMapping("/find/{userId}")
+    @GetMapping("/get/{userId}")
     @ApiOperation(value = "find all collections by user ID")
-    public List findByUserId(Integer userId)
+    public List findByUserId(@PathVariable("userId") Integer userId)
     {
         return collectionService.findByUserId(userId);
     }
