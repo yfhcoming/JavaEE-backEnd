@@ -4,6 +4,7 @@ package com.javaee.sys.controller;
 import com.javaee.sys.service.AudioHasLabelService;
 import com.javaee.sys.vo.audio.AudioHasLabelVo;
 import com.javaee.sys.vo.collection.CollectionHasAudioVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/audio")
+@Api(tags = "AudioHasLabel")
 public class AudioHasLabelController {
 
     @Autowired

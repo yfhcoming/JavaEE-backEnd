@@ -7,9 +7,8 @@ import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import com.javaee.sys.vo.audio.addCommentVo;
-import com.javaee.sys.vo.audio.getOneVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +31,7 @@ import static com.javaee.framework.utils.QiNiuUtils.download2;
  */
 @RestController
 @RequestMapping("/audio")
+@Api(tags = "Audio")
 public class AudioController {
 
     @Autowired
@@ -39,13 +39,6 @@ public class AudioController {
 
     @Autowired
     AudioMapper audioMapper;
-
-//    @GetMapping("/getOne")
-//    public void getOne(@RequestParam("audioId") Integer audioId)
-//    {
-//        getOneVo one = audioMapper.getOne(audioId);
-//        System.out.println(one);
-//    }
 
     @GetMapping("/findAll")
     @ApiOperation(value = "find all audios")

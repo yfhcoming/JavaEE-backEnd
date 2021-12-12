@@ -6,6 +6,7 @@ import com.javaee.sys.entity.Collection;
 import com.javaee.sys.entity.CollectionHasAudio;
 import com.javaee.sys.service.CollectionHasAudioService;
 import com.javaee.sys.vo.collection.CollectionHasAudioVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/collection")
+@Api(tags = "Audio")
 public class CollectionHasAudioController {
 
     @Autowired

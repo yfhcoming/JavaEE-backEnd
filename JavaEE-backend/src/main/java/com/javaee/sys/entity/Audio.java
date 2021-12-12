@@ -41,6 +41,8 @@ public class Audio implements Serializable {
 
     private Integer userId;
 
+    private String cover;
+
     /**
      * 创建时间
      */

@@ -70,7 +70,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
 
 
 
-    public boolean addCollection(@Validated CollectionAddVo dto, MultipartFile file){
+    public boolean addCollection(@Validated CollectionAddVo dto){
         if(!userService.isUserIn(dto.getUserId())){
             throw new APIException(AppCode.USER_NOT_EXIST, "用户不存在：userId - " + dto.getUserId());
         }
@@ -80,14 +80,14 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         }
         String cover;
         try {
-            InputStream fileInputStream= file.getInputStream();
-            cover= QiNiuUtils.upLoad(fileInputStream, file.getName());
+            InputStream fileInputStream= dto.getFile().getInputStream();
+            cover= QiNiuUtils.upLoad(fileInputStream, dto.getFile().getName());
         } catch (IOException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
         Collection collection = BeanConvertUtils.convertTo(dto, Collection::new);
-        save(collection);
         collection.setCover(cover);
+        save(collection);
         return true;
     }
 

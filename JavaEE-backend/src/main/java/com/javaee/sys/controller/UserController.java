@@ -3,6 +3,7 @@ package com.javaee.sys.controller;
 
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.user.*;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ import static com.javaee.framework.utils.QiNiuUtils.upLoad;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "User")
 public class UserController {
     @Autowired
     UserService userService;
