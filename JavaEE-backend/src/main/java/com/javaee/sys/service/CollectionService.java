@@ -33,4 +33,6 @@ public interface CollectionService extends IService<Collection> {
     List findByUserId(Integer userId);
 
     List findAllSortedByTime();
+
+    List findAllOrderByHeat();
 }

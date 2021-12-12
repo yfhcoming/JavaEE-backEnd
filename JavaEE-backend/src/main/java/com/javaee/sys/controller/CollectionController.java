@@ -59,11 +59,11 @@ public class CollectionController {
         return collectionService.findAllSortedByTime();
     }
 
-//    @GetMapping("/findAllOrderByTime")
-//    @ApiOperation(value = "find all collection sorted in descending order")
-//    public List findAllSortedByTime() {
-//        return collectionService.findAllSortedByTime();
-//    }
+    @GetMapping("/findAllOrderByHeat")
+    @ApiOperation(value = "find all collection sorted according to the heat")
+    public List findAllOrderByHeat() {
+        return collectionService.findAllOrderByHeat();
+    }
 
     @GetMapping("/get/{userId}")
     @ApiOperation(value = "find all collections by user ID")
