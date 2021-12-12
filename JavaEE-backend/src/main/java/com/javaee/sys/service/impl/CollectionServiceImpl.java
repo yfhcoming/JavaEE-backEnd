@@ -100,7 +100,7 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         List<CollectionPo> allSortedByTime = collectionMapper.findAllSortedByTime();
         return allSortedByTime;
     }
-    
+
     @Override
     public List findByUserId(Integer userId){
         if(userService.isUserIn(userId))

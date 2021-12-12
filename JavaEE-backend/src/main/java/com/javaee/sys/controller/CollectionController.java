@@ -57,6 +57,10 @@ public class CollectionController {
         return collectionService.findAllSortedByTime();
     }
 
-
-
+    @GetMapping("/find/{userId}")
+    @ApiOperation(value = "find all collections by user ID")
+    public List findByUserId(Integer userId)
+    {
+        return collectionService.findByUserId(userId);
+    }
 }
