@@ -7,6 +7,7 @@ import com.javaee.sys.entity.Collection;
 import com.javaee.sys.po.CollectionPo;
 import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.vo.collection.CollectionAddVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/collection")
+@Api(tags = "Collection")
 public class CollectionController {
 
     @Autowired
@@ -33,9 +35,9 @@ public class CollectionController {
 
     @PostMapping("/add")
     @ApiOperation(value = "set a new collection")
-    public boolean addCollection(@Validated CollectionAddVo vo, MultipartFile file){
+    public boolean addCollection(@Validated CollectionAddVo vo){
 
-        return collectionService.addCollection(vo,file);
+        return collectionService.addCollection(vo);
     }
 
     @GetMapping("/find/{collectionId}")
@@ -56,6 +58,12 @@ public class CollectionController {
     public List findAllSortedByTime() {
         return collectionService.findAllSortedByTime();
     }
+
+//    @GetMapping("/findAllOrderByTime")
+//    @ApiOperation(value = "find all collection sorted in descending order")
+//    public List findAllSortedByTime() {
+//        return collectionService.findAllSortedByTime();
+//    }
 
     @GetMapping("/get/{userId}")
     @ApiOperation(value = "find all collections by user ID")

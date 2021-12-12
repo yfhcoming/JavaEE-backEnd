@@ -4,6 +4,7 @@ package com.javaee.sys.controller;
 import com.javaee.sys.service.UserScoreAudioService;
 import com.javaee.sys.vo.audio.AudioHasLabelVo;
 import com.javaee.sys.vo.user.UserScoreAudioVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "UserScoreAudio")
 public class UserScoreAudioController {
 
     @Autowired

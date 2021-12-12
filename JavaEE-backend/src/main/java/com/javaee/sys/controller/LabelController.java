@@ -4,6 +4,7 @@ package com.javaee.sys.controller;
 import com.javaee.sys.service.AudioHasLabelService;
 import com.javaee.sys.service.LabelService;
 //import com.sun.xml.internal.bind.v2.TODO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/label")
+@Api(tags = "Label")
 public class LabelController {
 
     @Autowired

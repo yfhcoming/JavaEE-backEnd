@@ -3,9 +3,7 @@ package com.javaee.sys.mapper;
 import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.javaee.sys.po.AudioPo;
-import com.javaee.sys.po.CollectionPo;
 import com.javaee.sys.po.CommentPo;
-import com.javaee.sys.vo.audio.getOneVo;
 import org.apache.ibatis.annotations.*;
 
 import java.math.BigDecimal;

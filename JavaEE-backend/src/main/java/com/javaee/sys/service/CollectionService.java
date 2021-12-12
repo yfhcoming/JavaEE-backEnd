@@ -24,7 +24,7 @@ public interface CollectionService extends IService<Collection> {
 
     boolean isCollectionIn(Integer collectionId);
 
-    boolean addCollection(CollectionAddVo dto, MultipartFile file);
+    boolean addCollection(CollectionAddVo dto);
 
     List findAllCollections();
 
