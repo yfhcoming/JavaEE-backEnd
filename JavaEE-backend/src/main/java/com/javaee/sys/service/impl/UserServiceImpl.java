@@ -222,7 +222,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
             wrapper.eq(User::getUserId,userId);
             User user1=new User();
-            user1.setPhoto_url(url);
+            user1.setPhotoUrl(url);
             if(userMapper.update(user1,wrapper)>0) return true;
             else throw new APIException(AppCode.USER_PHOTO_UPDATE_FAIL);
         }
