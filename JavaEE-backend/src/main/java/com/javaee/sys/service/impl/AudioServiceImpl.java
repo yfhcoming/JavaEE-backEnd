@@ -19,14 +19,14 @@ import com.javaee.sys.vo.audio.AddAudioVo;
 import com.javaee.sys.vo.audio.addCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static com.javaee.framework.utils.QiNiuUtils.deleteFromQN;
-import static com.javaee.framework.utils.QiNiuUtils.downLoad;
+import static com.javaee.framework.utils.QiNiuUtils.*;
 
 /**
  * <p>
@@ -127,12 +127,11 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     }
 
     @Override
-    public String audioDownload(Integer id){
+    public MultipartFile audioDownload(Integer id){
         if(isAudioIn(id))
         {
             Audio audio=audioMapper.selectById(id);
-            String url=downLoad(audio.getAudioFile());
-            return url;
+            return download2(audio.getAudioFile());
         }
         else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }

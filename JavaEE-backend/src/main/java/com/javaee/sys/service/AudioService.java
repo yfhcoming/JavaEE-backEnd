@@ -5,12 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import com.javaee.sys.vo.audio.addCommentVo;
-import io.swagger.models.auth.In;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -41,7 +37,7 @@ public interface AudioService extends IService<Audio> {
 
     String audioDisplay(Integer id);
 
-    String audioDownload(Integer id);
+    MultipartFile audioDownload(Integer id);
 
     boolean deleteAudio(Integer id);
 
