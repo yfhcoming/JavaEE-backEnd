@@ -9,8 +9,6 @@ import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.framework.utils.QiNiuUtils;
 import com.javaee.sys.entity.*;
 import com.javaee.sys.mapper.AudioMapper;
-import com.javaee.sys.mapper.UserHasAudioMapper;
-import com.javaee.sys.po.AudioHasCommentPo;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.po.CommentPo;
 import com.javaee.sys.service.AudioService;
@@ -19,14 +17,12 @@ import com.javaee.sys.service.CommentService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import com.javaee.sys.vo.audio.addCommentVo;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.javaee.framework.utils.QiNiuUtils.deleteFromQN;
@@ -125,7 +121,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         if(isAudioIn(id))
         {
             Audio audio=audioMapper.selectById(id);
-            return audio.getQiniuLocation();
+            return audio.getAudioFile();
         }
         else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }
@@ -135,7 +131,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         if(isAudioIn(id))
         {
             Audio audio=audioMapper.selectById(id);
-            String url=downLoad(audio.getQiniuLocation());
+            String url=downLoad(audio.getAudioFile());
             return url;
         }
         else throw new APIException(AppCode.AUDIO_NOT_EXIST);
@@ -145,7 +141,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     public boolean deleteAudio(Integer id){
         if(isAudioIn(id))
         {
-            String key=audioMapper.selectById(id).getQiniuLocation().substring(36);
+            String key=audioMapper.selectById(id).getAudioFile().substring(36);
             if(audioMapper.deleteById(id)>0&&deleteFromQN(key)) return true;
             else return false;
         }
@@ -164,7 +160,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         }
         Audio audio=new Audio();
         audio.setAudioName(addAudioVo.getName());
-        audio.setQiniuLocation(url);
+        audio.setAudioFile(url);
         audio.setUserId(addAudioVo.getId());
         try
         {
@@ -177,8 +173,14 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
 
     @Override
     public List findByUserId(Integer userId){
-        LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
-        List<Audio> audioList=audioMapper.selectList(wrapper);
-        return audioList;
+        if(userService.isUserIn(userId))
+        {
+                LambdaQueryWrapper<Audio> wrapper=new LambdaQueryWrapper<>();
+            wrapper.eq(Audio::getUserId,userId);
+            List<Audio> audioList=audioMapper.selectList(wrapper);
+            if(audioList==null) throw new APIException(AppCode.USER_HAS_NO_AUDIO);
+            else return audioList;
+        }
+        else throw new APIException(AppCode.USER_NOT_EXIST);
     }
 }

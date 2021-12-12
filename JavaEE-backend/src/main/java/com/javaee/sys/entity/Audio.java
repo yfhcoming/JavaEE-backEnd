@@ -37,7 +37,7 @@ public class Audio implements Serializable {
 
     private String des;
 
-    private String qiniuLocation;
+    private String audioFile;
 
     private Integer userId;
 

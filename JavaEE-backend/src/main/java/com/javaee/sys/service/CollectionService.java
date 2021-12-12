@@ -29,4 +29,6 @@ public interface CollectionService extends IService<Collection> {
     List findAllCollections();
 
     CollectionPo findById(Integer collectionId);
+
+    List findByUserId(Integer userId);
 }

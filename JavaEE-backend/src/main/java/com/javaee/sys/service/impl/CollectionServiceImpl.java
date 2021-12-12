@@ -16,7 +16,6 @@ import com.javaee.sys.service.CollectionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.collection.CollectionAddVo;
-import com.javaee.sys.vo.collection.CollectionHasAudioVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -97,4 +96,16 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         return allCollections;
     }
 
+    @Override
+    public List findByUserId(Integer userId){
+        if(userService.isUserIn(userId))
+        {
+            LambdaQueryWrapper<Collection> wrapper=new LambdaQueryWrapper<>();
+            wrapper.eq(Collection::getUserId,userId);
+            List<Collection> collectionList=collectionMapper.selectList(wrapper);
+            if(collectionList==null) throw new APIException(AppCode.USER_HAS_NO_COLLECTION);
+            else return collectionList;
+        }
+        else throw new APIException(AppCode.USER_NOT_EXIST);
+    }
 }
