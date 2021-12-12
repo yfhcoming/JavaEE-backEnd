@@ -17,7 +17,10 @@ public class AddAudioVo {
     private String name;
 
     @NotNull(message = "音频不允许为空！")
-    private MultipartFile multipartFile;
+    private MultipartFile audio;
+
+    @NotNull(message = "封面不允许为空！")
+    private MultipartFile cover;
 
     private String description;
 }

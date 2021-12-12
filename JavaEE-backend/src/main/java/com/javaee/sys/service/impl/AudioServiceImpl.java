@@ -150,16 +150,23 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     @Override
     public boolean uploadAudio(AddAudioVo addAudioVo)
     {
-        String url;
+        String url1,url2;
         try {
-            InputStream fileInputStream= addAudioVo.getMultipartFile().getInputStream();
-            url= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
+            InputStream fileInputStream= addAudioVo.getAudio().getInputStream();
+            url1= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
+        } catch (IOException e) {
+            throw new APIException(AppCode.FILE_UPLOAD_FAIL);
+        }
+        try {
+            InputStream fileInputStream= addAudioVo.getCover().getInputStream();
+            url2= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
         } catch (IOException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
         Audio audio=new Audio();
         audio.setAudioName(addAudioVo.getName());
-        audio.setAudioFile(url);
+        audio.setAudioFile(url1);
+        audio.setCover(url2);
         audio.setUserId(addAudioVo.getId());
         audio.setDes(addAudioVo.getDescription());
         try
