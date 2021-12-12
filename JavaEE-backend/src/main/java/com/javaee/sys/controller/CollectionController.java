@@ -51,6 +51,11 @@ public class CollectionController {
         return collectionService.findAllCollections();
     }
 
+    @GetMapping("/findAllOrderByTime")
+    @ApiOperation(value = "find all collection sorted in descending order")
+    public List findAllSortedByTime() {
+        return collectionService.findAllSortedByTime();
+    }
 
 
 

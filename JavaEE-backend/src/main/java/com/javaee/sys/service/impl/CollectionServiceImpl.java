@@ -96,6 +96,11 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         return allCollections;
     }
 
+    public List findAllSortedByTime(){
+        List<CollectionPo> allSortedByTime = collectionMapper.findAllSortedByTime();
+        return allSortedByTime;
+    }
+    
     @Override
     public List findByUserId(Integer userId){
         if(userService.isUserIn(userId))
@@ -108,4 +113,6 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         }
         else throw new APIException(AppCode.USER_NOT_EXIST);
     }
+
+
 }

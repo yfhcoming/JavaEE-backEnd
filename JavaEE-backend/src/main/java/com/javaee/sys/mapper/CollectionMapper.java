@@ -33,4 +33,8 @@ public interface CollectionMapper extends BaseMapper<Collection> {
     @ResultMap(value = "findById")
     @Select("select C.collection_id,C.collection_name,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id")
     List<CollectionPo> findAllCollections();
+
+    @ResultMap(value = "findById")
+    @Select("select C.collection_id,C.collection_name,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id order by C.create_time desc")
+    List<CollectionPo> findAllSortedByTime();
 }
