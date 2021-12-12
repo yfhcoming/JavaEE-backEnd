@@ -79,9 +79,9 @@ public class UserController {
 
     @PostMapping("/photoupload")
     @ApiOperation(value = "upload photo by user ID")
-    public boolean photoUpload(Integer userId, MultipartFile file)
+    public boolean photoUpload(@Validated PhotoVo photoVo)
     {
-        return userService.uploadPhoto(userId,file);
+        return userService.uploadPhoto(photoVo);
     }
 
     @PostMapping("/uploadtest")

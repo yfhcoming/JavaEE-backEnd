@@ -1,12 +1,10 @@
 package com.javaee.sys.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.exceptions.ApiException;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.framework.utils.QiNiuUtils;
-import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.User;
 import com.javaee.sys.mapper.UserMapper;
 import com.javaee.sys.service.UserService;
@@ -18,11 +16,8 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -209,18 +204,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean uploadPhoto(Integer userId, MultipartFile file){
-        if(isUserIn(userId))
+    public boolean uploadPhoto(PhotoVo photoVo){
+        if(isUserIn(photoVo.getUserId()))
         {
             String url;
             try {
-                InputStream fileInputStream= file.getInputStream();
-                url= QiNiuUtils.upLoad(fileInputStream, file.getName());
+                InputStream fileInputStream= photoVo.getFile().getInputStream();
+                url= QiNiuUtils.upLoad(fileInputStream, photoVo.getFile().getName());
             } catch (IOException e) {
                 throw new APIException(AppCode.FILE_UPLOAD_FAIL);
             }
             LambdaQueryWrapper<User> wrapper=new LambdaQueryWrapper<>();
-            wrapper.eq(User::getUserId,userId);
+            wrapper.eq(User::getUserId,photoVo.getUserId());
             User user1=new User();
             user1.setPhotoUrl(url);
             if(userMapper.update(user1,wrapper)>0) return true;

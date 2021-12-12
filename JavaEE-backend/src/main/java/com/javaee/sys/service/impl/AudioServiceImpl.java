@@ -161,6 +161,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         audio.setAudioName(addAudioVo.getName());
         audio.setAudioFile(url);
         audio.setUserId(addAudioVo.getId());
+        audio.setDes(addAudioVo.getDescription());
         try
         {
             audioMapper.insert(audio);
