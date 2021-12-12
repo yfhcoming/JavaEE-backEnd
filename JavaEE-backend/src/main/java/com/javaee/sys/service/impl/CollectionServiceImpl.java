@@ -86,8 +86,8 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
         Collection collection = BeanConvertUtils.convertTo(dto, Collection::new);
-        save(collection);
         collection.setCover(cover);
+        save(collection);
         return true;
     }
 

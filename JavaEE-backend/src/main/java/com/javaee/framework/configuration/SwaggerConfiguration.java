@@ -32,7 +32,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.company.project.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.javaee.sys.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
@@ -41,7 +41,7 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title("Springboot-api APIs")
                 .description("Springboot-api APIs")
-                .termsOfServiceUrl("http://localhost:8080/")
+                .termsOfServiceUrl("http://localhost:8081/")
                 .version("1.0")
                 .build();
     }
