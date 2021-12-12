@@ -97,4 +97,9 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         return allCollections;
     }
 
+    public List findAllSortedByTime(){
+        List<CollectionPo> allSortedByTime = collectionMapper.findAllSortedByTime();
+        return allSortedByTime;
+    }
+
 }
