@@ -40,14 +40,14 @@ public class UserController {
 
     @Autowired
     AudioService audioService;
-    @GetMapping
+    @PostMapping("/actions/login")
     @ApiOperation(value = "login by email or telephone")
     public Integer Login(@Validated@RequestBody LoginVo loginVo, HttpSession httpSession)
     {
         return userService.userLogin(loginVo,httpSession);
     }
 
-    @PostMapping
+    @PostMapping("/actions/register")
     @ApiOperation(value = "user register")
     public String Register(@Validated@RequestBody RegisterVo registerVo)
     {
