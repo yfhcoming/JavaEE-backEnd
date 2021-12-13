@@ -17,7 +17,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.javaee.sys.service.CommentService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.audio.AddAudioVo;
-import com.javaee.sys.vo.audio.AddCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -149,7 +148,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     }
 
     @Override
-    public boolean uploadAudio(AddAudioVo addAudioVo)
+    public Integer uploadAudio(AddAudioVo addAudioVo)
     {
         String url1,url2;
         try {
@@ -173,7 +172,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         try
         {
             audioMapper.insert(audio);
-            return true;
+            return audioMapper.findIdByAudioFile(url1);
         }catch (Exception e){
             throw new APIException(AppCode.AUDIO_INSERT_FAIL);
         }

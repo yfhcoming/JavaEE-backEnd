@@ -87,32 +87,32 @@ public class AudioController {
         return audioService.addCommentByUser(addCommentDto);
     }
 
-    @GetMapping("/display")
+    @GetMapping("/{audioId}/actions/display")
     @ApiOperation(value = "get display audio url by id")
-    public String audioDisplay(Integer id){
+    public String audioDisplay(@PathVariable("audioId") Integer id){
         return audioService.audioDisplay(id);
     }
 
-    @GetMapping("/download")
+    @GetMapping("/{audioId}/actions/download")
     @ApiOperation(value = "get download url by id")
-    public MultipartFile audioDownload(Integer id){
+    public MultipartFile audioDownload(@PathVariable("audioId") Integer id){
         return audioService.audioDownload(id);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/{audioId}")
     @ApiOperation(value = "delete audio by id")
-    public boolean deleteAudio(Integer id){
+    public boolean deleteAudio(@PathVariable("audioId") Integer id){
         return audioService.deleteAudio(id);
     }
 
-    @PostMapping("/upload")
+    @PostMapping("")
     @ApiOperation(value = "upload audio file")
-    public boolean audioUpload(@Validated AddAudioVo addAudioVo)
+    public Integer audioUpload(@Validated AddAudioVo addAudioVo)
     {
         return audioService.uploadAudio(addAudioVo);
     }
 
-    @GetMapping("/get/{userId}")
+    @GetMapping("/{userId}/audios")
     @ApiOperation(value = "get all audio by user id")
     public List findByUserId(@PathVariable("userId") Integer userId){
         return audioService.findByUserId(userId);

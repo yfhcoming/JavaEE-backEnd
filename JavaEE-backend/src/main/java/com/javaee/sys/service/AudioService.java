@@ -5,7 +5,6 @@ import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.vo.audio.AddAudioVo;
-import com.javaee.sys.vo.audio.AddCommentVo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
@@ -42,7 +41,7 @@ public interface AudioService extends IService<Audio> {
 
     boolean deleteAudio(Integer id);
 
-    boolean uploadAudio(AddAudioVo addAudioVo);
+    Integer uploadAudio(AddAudioVo addAudioVo);
 
     List findByUserId(Integer userId);
 }

@@ -4,6 +4,7 @@ import com.javaee.sys.entity.Audio;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.po.CommentPo;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 
 import java.math.BigDecimal;
@@ -66,5 +67,6 @@ public interface AudioMapper extends BaseMapper<Audio> {
     @Select("select C.comment_id,C.user_id,U.user_name,U.photo_url,C.content,C.create_time from comment as C left join audio as A on A.audio_id=C.audio_id left join user as U on C.user_id =U.user_id where A.audio_id=#{audioId}")
     List<CommentPo> findAllCommentsById(@Param("audioId")Integer audioId);
 
-
+    @Select("select audio_id from audio where audio_file=#{audioFile}")
+    Integer findIdByAudioFile(@Param("audioFile")String audioFile);
 }
