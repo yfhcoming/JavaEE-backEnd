@@ -1,6 +1,7 @@
 package com.javaee.sys.controller;
 
 
+import com.javaee.sys.service.AudioService;
 import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.user.*;
@@ -33,6 +34,9 @@ import static com.javaee.framework.utils.QiNiuUtils.upLoad;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    AudioService audioService;
 
     @Autowired
     CollectionService collectionService;
