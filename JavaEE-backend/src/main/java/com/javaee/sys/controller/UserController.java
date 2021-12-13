@@ -89,8 +89,14 @@ public class UserController {
 
     @GetMapping("/{userId}/collections")
     @ApiOperation(value = "find all collections by user ID")
-    public List findByUserId(@PathVariable("userId") Integer userId)
+    public List findCollectionsByUserId(@PathVariable("userId") Integer userId)
     {
         return collectionService.findByUserId(userId);
+    }
+
+    @GetMapping("/{userId}/audios")
+    @ApiOperation(value = "get all audio by user id")
+    public List findAudiosByUserId(@PathVariable("userId") Integer userId){
+        return audioService.findByUserId(userId);
     }
 }

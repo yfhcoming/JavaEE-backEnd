@@ -105,16 +105,11 @@ public class AudioController {
         return audioService.deleteAudio(id);
     }
 
-    @PostMapping("")
+    @PostMapping("/audio")
     @ApiOperation(value = "upload audio file")
     public Integer audioUpload(@Validated AddAudioVo addAudioVo)
     {
         return audioService.uploadAudio(addAudioVo);
     }
 
-    @GetMapping("/{userId}/audios")
-    @ApiOperation(value = "get all audio by user id")
-    public List findByUserId(@PathVariable("userId") Integer userId){
-        return audioService.findByUserId(userId);
-    }
 }
