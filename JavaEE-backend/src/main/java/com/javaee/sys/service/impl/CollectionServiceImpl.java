@@ -81,8 +81,8 @@ public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collect
         }
         String cover;
         try {
-            InputStream fileInputStream= dto.getFile().getInputStream();
-            cover= QiNiuUtils.upLoad(fileInputStream, dto.getFile().getName());
+            InputStream fileInputStream= dto.getMultipartFile().getInputStream();
+            cover= QiNiuUtils.upLoad(fileInputStream, dto.getMultipartFile().getName());
         } catch (IOException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }

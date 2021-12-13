@@ -18,6 +18,6 @@ public class CollectionAddVo {
     @NotBlank(message = "收藏夹名称不允许为空")
     private String collectionName;
 
-    private MultipartFile file;
+    private MultipartFile multipartFile;
 
 }

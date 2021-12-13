@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
+import com.javaee.sys.entity.Audio;
 import com.javaee.sys.entity.AudioHasLabel;
 import com.javaee.sys.entity.UserScoreAudio;
 import com.javaee.sys.mapper.UserScoreAudioMapper;
+import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
 import com.javaee.sys.service.UserScoreAudioService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +17,8 @@ import com.javaee.sys.vo.audio.AudioHasLabelVo;
 import com.javaee.sys.vo.user.UserScoreAudioVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -61,6 +65,11 @@ public class UserScoreAudioServiceImpl extends ServiceImpl<UserScoreAudioMapper,
         }
 
         this.save(BeanConvertUtils.convertTo(dto, UserScoreAudio::new));
+
+        BigDecimal scoreById = audioService.findScoreById(dto.getAudioId());
+        Audio byId = audioService.getById(dto.getAudioId());
+        byId.setScore(scoreById);
+        audioService.updateById(byId);
 
         return true;
     }
