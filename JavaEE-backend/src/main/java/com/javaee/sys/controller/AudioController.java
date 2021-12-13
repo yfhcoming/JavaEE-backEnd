@@ -1,6 +1,7 @@
 package com.javaee.sys.controller;
 
 
+import com.javaee.framework.configuration.RedisConfig;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.dto.AddCommentDto;
 import com.javaee.sys.dto.ConvertAddCommentVo2AddCommentDto;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.Cacheable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -44,7 +46,8 @@ public class AudioController {
     @Autowired
     AudioMapper audioMapper;
 
-    @GetMapping
+    @GetMapping()
+//    @Cacheable(value = RedisConfig.REDIS_KEY_DATABASE)
     @ApiOperation(value = "find all audios")
     public List findAllAudios() {
         return audioService.findAllAudios();

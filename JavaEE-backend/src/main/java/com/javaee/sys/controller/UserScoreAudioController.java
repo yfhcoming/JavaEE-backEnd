@@ -30,11 +30,11 @@ public class UserScoreAudioController {
 
     @PostMapping("/{userId}/audios/{audioId}/actions/score")
     @ApiOperation(value = "user scores an audio")
-    public boolean scoreAudio(@PathVariable("audioId") Integer audioId,
-                              @PathVariable("labelId") Integer labelId,
+    public boolean scoreAudio(@PathVariable("userId") Integer userId,
+                              @PathVariable("audioId") Integer audioId,
                               @RequestParam("score") BigDecimal score)
     {
-        UserScoreAudioVo userScoreAudioVo = new UserScoreAudioVo(audioId, labelId, score);
+        UserScoreAudioVo userScoreAudioVo = new UserScoreAudioVo(userId, audioId, score);
         return userScoreAudioService.scoreAudio(userScoreAudioVo);
     }
 

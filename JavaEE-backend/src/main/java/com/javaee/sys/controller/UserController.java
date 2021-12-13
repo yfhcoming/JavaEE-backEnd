@@ -36,7 +36,7 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    CollectionService collectionService;
+    AudioService audioService;
 
     @Autowired
     AudioService audioService;
@@ -54,41 +54,49 @@ public class UserController {
         return userService.userRegister(registerVo);
     }
 
-    @PatchMapping("/password")
+    @PostMapping("/pswupdate")
     @ApiOperation(value = "update user password")
     public String pswUpdate(@Validated@RequestBody PasswordUpdateVo passwordUpdateVo)
     {
         return userService.passwordUpdate(passwordUpdateVo);
     }
 
-    @PatchMapping("/information")
+    @PostMapping("/infoupdate")
     @ApiOperation(value = "update user information")
     public String infoUpdate(@Validated@RequestBody InfoUpdateVo infoUpdateVo)
     {
         return userService.infoUpdate(infoUpdateVo);
     }
 
-    @GetMapping("/information/{userid}")
+    @PostMapping("/infoview")
     @ApiOperation(value = "view user information by id")
-    public UserInfoVo infoView(@PathVariable("userid") Integer id)
+    public UserInfoVo infoView(Integer id)
     {
         return userService.infoView(id);
     }
 
-    @PostMapping("actions/sendemail")
+    @PostMapping("/sendemail")
     @ApiOperation(value = "send verification code by email")
     public boolean sendEmail(String email)
     {
         return userService.sendEmail(email);
     }
 
-    @PatchMapping("/photo")
+    @PostMapping("/checkemail")
+    public boolean checkEmail(String email,String code)
+    {
+        return userService.checkEmail(email,code);
+    }
+
+    @PostMapping("/photoupload")
     @ApiOperation(value = "upload photo by user ID")
     public boolean photoUpload(@Validated PhotoVo photoVo)
     {
         return userService.uploadPhoto(photoVo);
     }
 
+    @PostMapping("/uploadtest")
+    public boolean phototest(MultipartFile file){if(file!=null) return true;else return false;}
 
     @GetMapping("/{userId}/collections")
     @ApiOperation(value = "find all collections by user ID")

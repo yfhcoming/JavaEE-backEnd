@@ -22,6 +22,8 @@ public class AudioPo {
 
     private String uploadUserName;
 
+    private String uploadUserPhoto;
+
     /**
      * 创建时间
      */
