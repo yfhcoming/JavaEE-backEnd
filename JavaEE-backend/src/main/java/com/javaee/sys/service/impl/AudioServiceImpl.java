@@ -131,8 +131,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         if(isAudioIn(id))
         {
             Audio audio=audioMapper.selectById(id);
-            MultipartFile file=download2(audio.getAudioFile());
-            return file;
+            return download2(audio.getAudioFile());
         }
         else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }
