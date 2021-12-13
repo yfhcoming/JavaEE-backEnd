@@ -34,6 +34,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    CollectionService collectionService;
 
     @GetMapping("")
     @ApiOperation(value = "login by email or telephone")
@@ -85,7 +87,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/{userId}/comments")
+    @GetMapping("/{userId}/collections")
     @ApiOperation(value = "find all collections by user ID")
     public List findByUserId(@PathVariable("userId") Integer userId)
     {
