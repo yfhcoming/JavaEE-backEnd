@@ -44,7 +44,7 @@ public class AudioController {
     @Autowired
     AudioMapper audioMapper;
 
-    @GetMapping()
+    @GetMapping
     @ApiOperation(value = "find all audios")
     public List findAllAudios() {
         return audioService.findAllAudios();
