@@ -37,5 +37,5 @@ public class UserScoreAudioController {
         UserScoreAudioVo userScoreAudioVo = new UserScoreAudioVo(audioId, labelId, score);
         return userScoreAudioService.scoreAudio(userScoreAudioVo);
     }
-    
+
 }
