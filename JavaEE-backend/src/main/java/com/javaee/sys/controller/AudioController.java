@@ -108,7 +108,7 @@ public class AudioController {
     }
 
     @GetMapping("/get/{userId}")
-    @ApiOperation(value = "get all audio by user ID")
+    @ApiOperation(value = "get all audio by user id")
     public List findByUserId(@PathVariable("userId") Integer userId){
         return audioService.findByUserId(userId);
     }

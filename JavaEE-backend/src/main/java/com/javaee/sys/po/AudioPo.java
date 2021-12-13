@@ -14,10 +14,11 @@ public class AudioPo {
 
     private String audioName;
 
-    //Redis
     private BigDecimal score;
 
     private String des;
+
+    private String cover;
 
     private String uploadUserName;
 
