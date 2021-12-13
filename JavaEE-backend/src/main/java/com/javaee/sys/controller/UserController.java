@@ -25,55 +25,55 @@ import static com.javaee.framework.utils.QiNiuUtils.upLoad;
  * @since 2021-12-05
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/v1/user")
 @Api(tags = "User")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/login")
+    @GetMapping("")
     @ApiOperation(value = "login by email or telephone")
     public Integer Login(@Validated@RequestBody LoginVo loginVo, HttpSession httpSession)
     {
         return userService.userLogin(loginVo,httpSession);
     }
 
-    @PostMapping("/register")
+    @PostMapping("")
     @ApiOperation(value = "user register")
     public String Register(@Validated@RequestBody RegisterVo registerVo)
     {
         return userService.userRegister(registerVo);
     }
 
-    @PostMapping("/pswupdate")
+    @PatchMapping("/update/password")
     @ApiOperation(value = "update user password")
     public String pswUpdate(@Validated@RequestBody PasswordUpdateVo passwordUpdateVo)
     {
         return userService.passwordUpdate(passwordUpdateVo);
     }
 
-    @PostMapping("/infoupdate")
+    @PatchMapping("/update/info")
     @ApiOperation(value = "update user information")
     public String infoUpdate(@Validated@RequestBody InfoUpdateVo infoUpdateVo)
     {
         return userService.infoUpdate(infoUpdateVo);
     }
 
-    @PostMapping("/infoview")
+    @GetMapping("/info/{userid}")
     @ApiOperation(value = "view user information by id")
-    public UserInfoVo infoView(Integer id)
+    public UserInfoVo infoView(@PathVariable("userid") Integer id)
     {
         return userService.infoView(id);
     }
 
-    @PostMapping("/sendemail")
+    @PostMapping("/email")
     @ApiOperation(value = "send verification code by email")
     public boolean sendEmail(String email)
     {
         return userService.sendEmail(email);
     }
 
-    @PostMapping("/photoupload")
+    @PostMapping("/photo")
     @ApiOperation(value = "upload photo by user ID")
     public boolean photoUpload(@Validated PhotoVo photoVo)
     {
