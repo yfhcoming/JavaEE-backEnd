@@ -42,6 +42,7 @@ public class SwaggerConfiguration {
                 .title("Springboot-api APIs")
                 .description("Springboot-api APIs")
                 .termsOfServiceUrl("http://localhost:8081/")
+                .contact("T12")
                 .version("1.0")
                 .build();
     }
