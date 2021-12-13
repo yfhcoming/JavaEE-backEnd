@@ -1,6 +1,7 @@
 package com.javaee.sys.controller;
 
 
+import com.javaee.sys.service.CollectionService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.user.*;
 import io.swagger.annotations.Api;
@@ -12,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpSession;
+
+import java.util.List;
 
 import static com.javaee.framework.utils.QiNiuUtils.downLoad;
 import static com.javaee.framework.utils.QiNiuUtils.upLoad;
@@ -30,6 +33,7 @@ import static com.javaee.framework.utils.QiNiuUtils.upLoad;
 public class UserController {
     @Autowired
     UserService userService;
+
 
     @GetMapping("")
     @ApiOperation(value = "login by email or telephone")
@@ -78,5 +82,13 @@ public class UserController {
     public boolean photoUpload(@Validated PhotoVo photoVo)
     {
         return userService.uploadPhoto(photoVo);
+    }
+
+
+    @GetMapping("/{userId}/comments")
+    @ApiOperation(value = "find all collections by user ID")
+    public List findByUserId(@PathVariable("userId") Integer userId)
+    {
+        return collectionService.findByUserId(userId);
     }
 }

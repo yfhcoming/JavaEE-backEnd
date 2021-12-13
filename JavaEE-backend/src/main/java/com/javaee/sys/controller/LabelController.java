@@ -4,14 +4,11 @@ package com.javaee.sys.controller;
 import com.javaee.sys.service.AudioHasLabelService;
 import com.javaee.sys.service.LabelService;
 //import com.sun.xml.internal.bind.v2.TODO;
+import com.javaee.sys.vo.audio.AudioHasLabelVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -26,7 +23,7 @@ import java.util.List;
  * @since 2021-12-05
  */
 @RestController
-@RequestMapping("/label")
+@RequestMapping("/v1/labels")
 @Api(tags = "Label")
 public class LabelController {
 
@@ -36,7 +33,7 @@ public class LabelController {
     @Autowired
     AudioHasLabelService audioHasLabelService;
 
-    @GetMapping("/findAll")
+    @GetMapping()
     @ApiOperation(value = "find all labels")
     public List findAllLabels()
     {
@@ -44,9 +41,9 @@ public class LabelController {
         return labelService.findAllLabels();
     }
 
-    @GetMapping("/findAllAudiosByLabelId")
+    @GetMapping("/{labelId}/audios")
     @ApiOperation(value = "find all audios of the label by LabelId")
-    public List findAllAudiosByLabelId(@RequestParam("LabelId") @Valid @NotNull Integer LabelId){
+    public List findAllAudiosByLabelId(@PathVariable("LabelId") @Valid @NotNull Integer LabelId) {
         return audioHasLabelService.findAllAudiosByLabelId(LabelId);
     }
 

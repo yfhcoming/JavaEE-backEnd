@@ -8,10 +8,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -22,18 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-12-08
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/v1/users")
 @Api(tags = "UserScoreAudio")
 public class UserScoreAudioController {
 
     @Autowired
     UserScoreAudioService userScoreAudioService;
 
-    @PostMapping("/scoreAudio")
+    @PostMapping("/{userId}/audios/{audioId}/actions/score")
     @ApiOperation(value = "user scores an audio")
-    public boolean scoreAudio(@Validated UserScoreAudioVo vo)
+    public boolean scoreAudio(@PathVariable("audioId") Integer audioId,
+                              @PathVariable("labelId") Integer labelId,
+                              @RequestParam("score") BigDecimal score)
     {
-        return userScoreAudioService.scoreAudio(vo);
+        UserScoreAudioVo userScoreAudioVo = new UserScoreAudioVo(audioId, labelId, score);
+        return userScoreAudioService.scoreAudio(userScoreAudioVo);
     }
-
+    
 }

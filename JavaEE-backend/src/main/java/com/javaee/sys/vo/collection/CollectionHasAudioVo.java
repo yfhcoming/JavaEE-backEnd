@@ -13,4 +13,9 @@ public class CollectionHasAudioVo {
 
     @NotNull(message = "音频Id不允许为空")
     private Integer audioId;
+
+    public CollectionHasAudioVo(Integer collectionId, Integer audioId) {
+        this.collectionId = collectionId;
+        this.audioId = audioId;
+    }
 }

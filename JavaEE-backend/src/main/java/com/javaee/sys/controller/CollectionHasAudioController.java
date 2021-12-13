@@ -25,29 +25,34 @@ import java.util.List;
  * @since 2021-12-07
  */
 @RestController
-@RequestMapping("/collection")
+@RequestMapping("/v1/collections")
 @Api(tags = "Audio")
 public class CollectionHasAudioController {
 
     @Autowired
     CollectionHasAudioService collectionHasAudioService;
 
-    @PostMapping("/addAudio")
+    @PostMapping("/{collectionId}/audios/{audioId}")
     @ApiOperation(value = "add an audio into the collection")
-    public boolean addAudio(@RequestBody @Validated CollectionHasAudioVo vo)
+    public boolean addAudio(@PathVariable("collectionId") Integer collectionId,
+                            @PathVariable("audioId") Integer audioId)
     {
-        return collectionHasAudioService.addAudio(vo);
+        CollectionHasAudioVo collectionHasAudioVo = new CollectionHasAudioVo(collectionId, audioId);
+        return collectionHasAudioService.addAudio(collectionHasAudioVo);
     }
 
-    @PostMapping("/deleteAudio")
+    @DeleteMapping("/{collectionId}/audios/{audioId}")
     @ApiOperation(value = "delete an audio in the collection")
-    public boolean deleteAudio(@RequestBody@Validated CollectionHasAudioVo vo){
-        return collectionHasAudioService.deleteAudio(vo);
+    public boolean deleteAudio(@PathVariable("collectionId") Integer collectionId,
+                            @PathVariable("audioId") Integer audioId)
+    {
+        CollectionHasAudioVo collectionHasAudioVo = new CollectionHasAudioVo(collectionId, audioId);
+        return collectionHasAudioService.deleteAudio(collectionHasAudioVo);
     }
 
-    @GetMapping("/findAllAudiosById")
+    @GetMapping("/{collectionId}/audios")
     @ApiOperation(value = "find all audios of the audio by audioId")
-    public List findAllAudiosById(@RequestParam("collectionId") @Valid @NotNull Integer collectionId){
+    public List findAllAudiosById(@PathVariable("collectionId") @Valid @NotNull Integer collectionId){
         return collectionHasAudioService.findAllAudiosById(collectionId);
     }
 }

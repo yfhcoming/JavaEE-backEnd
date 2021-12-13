@@ -39,9 +39,9 @@ public class AudioHasLabelController {
         return audioHasLabelService.addLabel(audioHasLabelVo);
     }
 
-    @GetMapping("/findAllLabelsById")
+    @GetMapping("/{audioId}/labels/")
     @ApiOperation(value = "find all labels of the audio by audioId")
-    public List findAllLabelsById(@RequestParam("audioId") @Valid @NotNull Integer audioId){
+    public List findAllLabelsById(@PathVariable("audioId") @Valid @NotNull Integer audioId){
         return audioHasLabelService.findAllLabelsById(audioId);
     }
 

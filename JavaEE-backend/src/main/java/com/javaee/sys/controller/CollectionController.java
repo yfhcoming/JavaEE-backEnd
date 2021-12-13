@@ -26,49 +26,42 @@ import java.util.List;
  * @since 2021-12-05
  */
 @RestController
-@RequestMapping("/collection")
+@RequestMapping("/v1/collections")
 @Api(tags = "Collection")
 public class CollectionController {
 
     @Autowired
     CollectionService collectionService;
 
-    @PostMapping("/add")
+    @PostMapping("/collection")
     @ApiOperation(value = "set a new collection")
     public boolean addCollection(@Validated CollectionAddVo vo){
 
         return collectionService.addCollection(vo);
     }
 
-    @GetMapping("/find/{collectionId}")
+    @GetMapping("/{collectionId}")
     @ApiOperation(value = "find the collection by id")
     public CollectionPo findById(@Validated @NotNull @PathVariable("collectionId")Integer collectionId)
     {
         return collectionService.findById(collectionId);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping()
     @ApiOperation(value = "find all collection")
     public List findAllCollections() {
         return collectionService.findAllCollections();
     }
 
-    @GetMapping("/findAllOrderByTime")
+    @GetMapping("/query/sort-by-time")
     @ApiOperation(value = "find all collection sorted in descending order")
     public List findAllSortedByTime() {
         return collectionService.findAllSortedByTime();
     }
 
-    @GetMapping("/findAllOrderByHeat")
+    @GetMapping("/query/sort-by-heat")
     @ApiOperation(value = "find all collection sorted according to the heat")
     public List findAllOrderByHeat() {
         return collectionService.findAllOrderByHeat();
-    }
-
-    @GetMapping("/get/{userId}")
-    @ApiOperation(value = "find all collections by user ID")
-    public List findByUserId(@PathVariable("userId") Integer userId)
-    {
-        return collectionService.findByUserId(userId);
     }
 }
