@@ -26,6 +26,7 @@ public interface CollectionMapper extends BaseMapper<Collection> {
                     @Result(property = "collectionId", column = "collection_id", id = true),
                     @Result(property = "collectionName", column = "collection_name"),
                     @Result(property = "createUserName", column = "user_name"),
+                    @Result(property = "collectionCover", column = "cover"),
                     @Result(property = "createTime", column = "create_time"),
             })
     @Select("select C.collection_id,C.collection_name,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id where C.collection_id=#{collectionId}")
@@ -36,7 +37,7 @@ public interface CollectionMapper extends BaseMapper<Collection> {
     List<CollectionPo> findAllCollections();
 
     @ResultMap(value = "findById")
-    @Select("select C.collection_id,C.collection_name,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id order by C.create_time desc")
+    @Select("select C.collection_id,C.collection_name,C.cover,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id order by C.create_time desc")
     List<CollectionPo> findAllSortedByTime();
 
     @Results(id = "findAllOrderByHeat",
@@ -45,8 +46,9 @@ public interface CollectionMapper extends BaseMapper<Collection> {
                     @Result(property = "collectionName", column = "collection_name"),
                     @Result(property = "createUserName", column = "user_name"),
                     @Result(property = "createTime", column = "create_time"),
+                    @Result(property = "collectionCover", column = "cover"),
                     @Result(property = "commentNumber", column = "comment_number"),
             })
-    @Select("select C.collection_id,C.collection_name,H.user_name,C.create_time,H.comment_number from collection as C natural join collection_has_comment_view as H order by H.comment_number desc,C.collection_id asc")
+    @Select("select C.collection_id,C.collection_name,C.cover,H.user_name,C.create_time,H.comment_number from collection as C natural join collection_has_comment_view as H order by H.comment_number desc,C.collection_id asc")
     List<CollectionHeatPo> findAllOrderByHeat();
 }

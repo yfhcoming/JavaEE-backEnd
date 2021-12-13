@@ -14,5 +14,7 @@ public class CollectionPo {
 
     private String collectionName;
 
+    private String collectionCover;
+
     private LocalDateTime createTime;
 }

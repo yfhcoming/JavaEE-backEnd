@@ -14,6 +14,8 @@ public class CollectionHeatPo {
 
     private String collectionName;
 
+    private String collectionCover;
+
     private LocalDateTime createTime;
 
     private Integer commentNumber;

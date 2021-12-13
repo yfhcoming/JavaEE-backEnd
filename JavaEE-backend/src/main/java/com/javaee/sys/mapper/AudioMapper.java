@@ -48,11 +48,11 @@ public interface AudioMapper extends BaseMapper<Audio> {
                     @Result(property = "uploadUserName", column = "user_name"),
                     @Result(property = "createTime", column = "create_time"),
             })
-    @Select("select A.audio_id,A.audio_name,A.score,A.des,U.user_name,A.create_time from audio as A left join user as U on A.user_id =U.user_id where A.audio_id=#{audioId}")
+    @Select("select A.audio_id,A.audio_name,A.score,A.des,A.cover,U.user_name,A.create_time from audio as A left join user as U on A.user_id =U.user_id where A.audio_id=#{audioId}")
     AudioPo findById(@Param("audioId")Integer audioId);
 
     @ResultMap(value = "findById")
-    @Select("select A.audio_id,A.audio_name,A.score,A.des,U.user_name,A.create_time from audio as A left join user as U on A.user_id =U.user_id ")
+    @Select("select A.audio_id,A.audio_name,A.score,A.des,A.cover,U.user_name,A.create_time from audio as A left join user as U on A.user_id =U.user_id ")
     List<AudioPo> findAllAudios();
 
     @Results(id = "findAllCommentsById",
