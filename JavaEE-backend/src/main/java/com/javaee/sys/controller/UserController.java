@@ -36,68 +36,59 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    AudioService audioService;
-
-    @Autowired
     CollectionService collectionService;
 
-    @PostMapping("/login")
+    @Autowired
+    AudioService audioService;
+    @GetMapping
     @ApiOperation(value = "login by email or telephone")
     public Integer Login(@Validated@RequestBody LoginVo loginVo, HttpSession httpSession)
     {
         return userService.userLogin(loginVo,httpSession);
     }
 
-    @PostMapping("/register")
+    @PostMapping
     @ApiOperation(value = "user register")
     public String Register(@Validated@RequestBody RegisterVo registerVo)
     {
         return userService.userRegister(registerVo);
     }
 
-    @PostMapping("/pswupdate")
+    @PatchMapping("/password")
     @ApiOperation(value = "update user password")
     public String pswUpdate(@Validated@RequestBody PasswordUpdateVo passwordUpdateVo)
     {
         return userService.passwordUpdate(passwordUpdateVo);
     }
 
-    @PostMapping("/infoupdate")
+    @PatchMapping("/information")
     @ApiOperation(value = "update user information")
     public String infoUpdate(@Validated@RequestBody InfoUpdateVo infoUpdateVo)
     {
         return userService.infoUpdate(infoUpdateVo);
     }
 
-    @PostMapping("/infoview")
+    @GetMapping("/information/{userid}")
     @ApiOperation(value = "view user information by id")
-    public UserInfoVo infoView(Integer id)
+    public UserInfoVo infoView(@PathVariable("userid") Integer id)
     {
         return userService.infoView(id);
     }
 
-    @PostMapping("/sendemail")
+    @PostMapping("actions/sendemail")
     @ApiOperation(value = "send verification code by email")
     public boolean sendEmail(String email)
     {
         return userService.sendEmail(email);
     }
 
-    @PostMapping("/checkemail")
-    public boolean checkEmail(String email,String code)
-    {
-        return userService.checkEmail(email,code);
-    }
-
-    @PostMapping("/photoupload")
+    @PatchMapping("/photo")
     @ApiOperation(value = "upload photo by user ID")
     public boolean photoUpload(@Validated PhotoVo photoVo)
     {
         return userService.uploadPhoto(photoVo);
     }
 
-    @PostMapping("/uploadtest")
-    public boolean phototest(MultipartFile file){if(file!=null) return true;else return false;}
 
     @GetMapping("/{userId}/collections")
     @ApiOperation(value = "find all collections by user ID")
