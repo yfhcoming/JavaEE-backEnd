@@ -26,7 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/v1/collections")
-@Api(tags = "Audio")
+@Api(tags = "Collection")
 public class CollectionHasAudioController {
 
     @Autowired
@@ -51,7 +51,7 @@ public class CollectionHasAudioController {
     }
 
     @GetMapping("/{collectionId}/audios")
-    @ApiOperation(value = "find all audios of the audio by audioId")
+    @ApiOperation(value = "find all audios of the collection by collectionId")
     public List findAllAudiosById(@PathVariable("collectionId") @Valid @NotNull Integer collectionId){
         return collectionHasAudioService.findAllAudiosById(collectionId);
     }
