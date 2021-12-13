@@ -73,12 +73,6 @@ public class UserController {
         return userService.sendEmail(email);
     }
 
-    @PostMapping("/checkemail")
-    public boolean checkEmail(String email,String code)
-    {
-        return userService.checkEmail(email,code);
-    }
-
     @PostMapping("/photoupload")
     @ApiOperation(value = "upload photo by user ID")
     public boolean photoUpload(@Validated PhotoVo photoVo)
@@ -86,6 +80,4 @@ public class UserController {
         return userService.uploadPhoto(photoVo);
     }
 
-    @PostMapping("/uploadtest")
-    public boolean phototest(MultipartFile file){if(file!=null) return true;else return false;}
 }

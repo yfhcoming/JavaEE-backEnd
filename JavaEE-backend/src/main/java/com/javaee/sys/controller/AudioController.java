@@ -112,10 +112,4 @@ public class AudioController {
     public List findByUserId(@PathVariable("userId") Integer userId){
         return audioService.findByUserId(userId);
     }
-
-    @GetMapping("get/test")
-    public MultipartFile test(String url)
-    {
-        return download2(url);
-    }
 }
