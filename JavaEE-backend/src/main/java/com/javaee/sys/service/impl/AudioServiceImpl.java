@@ -7,6 +7,7 @@ import com.javaee.framework.enums.AppCode;
 import com.javaee.framework.exception.APIException;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.framework.utils.QiNiuUtils;
+import com.javaee.sys.dto.AddCommentDto;
 import com.javaee.sys.entity.*;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.po.AudioPo;
@@ -16,7 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.javaee.sys.service.CommentService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.audio.AddAudioVo;
-import com.javaee.sys.vo.audio.addCommentVo;
+import com.javaee.sys.vo.audio.AddCommentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -99,7 +100,7 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         return comments;
     }
 
-    public boolean addCommentByUser(addCommentVo dto){
+    public boolean addCommentByUser(AddCommentDto dto){
         // TODO 先判断评论 用户
         // 先创建评论 (userId )
         // 在创建audio 拥有评论 表

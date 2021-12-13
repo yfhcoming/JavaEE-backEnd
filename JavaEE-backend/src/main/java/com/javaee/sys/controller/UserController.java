@@ -25,7 +25,7 @@ import static com.javaee.framework.utils.QiNiuUtils.upLoad;
  * @since 2021-12-05
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("v1/user")
 @Api(tags = "User")
 public class UserController {
     @Autowired

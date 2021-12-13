@@ -23,18 +23,20 @@ import java.util.List;
  * @since 2021-12-07
  */
 @RestController
-@RequestMapping("/audio")
+@RequestMapping("/v1/audios")
 @Api(tags = "AudioHasLabel")
 public class AudioHasLabelController {
 
     @Autowired
     AudioHasLabelService audioHasLabelService;
 
-    @PostMapping("/addLabel")
+    @PostMapping("/{audioId}/labels/{labelId}")
     @ApiOperation(value = "add an label to the audio")
-    public boolean addLabel(@RequestBody @Validated AudioHasLabelVo vo)
+    public boolean addLabel(@PathVariable("audioId") Integer audioId,
+                            @PathVariable("labelId") Integer labelId)
     {
-        return audioHasLabelService.addLabel(vo);
+        AudioHasLabelVo audioHasLabelVo = new AudioHasLabelVo(audioId,labelId);
+        return audioHasLabelService.addLabel(audioHasLabelVo);
     }
 
     @GetMapping("/findAllLabelsById")

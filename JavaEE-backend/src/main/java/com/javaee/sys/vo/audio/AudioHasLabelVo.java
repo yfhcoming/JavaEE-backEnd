@@ -12,4 +12,9 @@ public class AudioHasLabelVo {
 
     @NotNull(message = "标签Id不允许为空")
     private Integer labelId;
+
+    public AudioHasLabelVo(Integer audioId, Integer labelId) {
+        this.audioId = audioId;
+        this.labelId = labelId;
+    }
 }
