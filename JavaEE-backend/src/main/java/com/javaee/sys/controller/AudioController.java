@@ -97,7 +97,7 @@ public class AudioController {
     }
 
     @GetMapping("/{audioId}/actions/download")
-    @ApiOperation(value = "get download url by id")
+    @ApiOperation(value = "download by id")
     public MultipartFile audioDownload(@PathVariable("audioId") Integer id){
         return audioService.audioDownload(id);
     }

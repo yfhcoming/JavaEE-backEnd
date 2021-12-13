@@ -64,7 +64,7 @@ public class QiNiuUtils {
         String finalUrl =auth.privateDownloadUrl(locateUrl);
         String fileName=locateUrl.substring(36);
         HttpUtil.downloadFile(finalUrl, FileUtil.file("D://七牛云"+fileName));
-        File file = new File("D://七牛云/"+fileName);
+        File file = new File("D://七牛云"+fileName);
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(file);
