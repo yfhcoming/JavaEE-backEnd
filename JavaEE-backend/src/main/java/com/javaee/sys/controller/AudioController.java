@@ -1,12 +1,9 @@
 package com.javaee.sys.controller;
 
 
-import com.javaee.framework.configuration.RedisConfig;
-import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.dto.AddCommentDto;
 import com.javaee.sys.dto.ConvertAddCommentVo2AddCommentDto;
 import com.javaee.sys.entity.Audio;
-import com.javaee.sys.entity.Comment;
 import com.javaee.sys.mapper.AudioMapper;
 import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
@@ -18,14 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.annotations.Cacheable;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
-
-import static com.javaee.framework.utils.QiNiuUtils.download2;
 
 /**
  * <p>
