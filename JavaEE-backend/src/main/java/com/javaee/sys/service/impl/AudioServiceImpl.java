@@ -128,13 +128,13 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     }
 
     @Override
-    public void audioDownload(HttpServletResponse res){
-//        if(isAudioIn(id))
-//        {
-//            Audio audio=audioMapper.selectById(id);
-            download(res);
-//        }
-//        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
+    public void audioDownload(Integer id,HttpServletResponse res){
+        if(isAudioIn(id))
+        {
+            Audio audio=audioMapper.selectById(id);
+            download(audio.getAudioFile(), res);
+        }
+        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }
 
     @Override

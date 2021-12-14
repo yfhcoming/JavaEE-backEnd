@@ -38,7 +38,7 @@ public interface AudioService extends IService<Audio> {
 
     String audioDisplay(Integer id);
 
-    void audioDownload(HttpServletResponse res);
+    void audioDownload(Integer id,HttpServletResponse res);
 
     boolean deleteAudio(Integer id);
 

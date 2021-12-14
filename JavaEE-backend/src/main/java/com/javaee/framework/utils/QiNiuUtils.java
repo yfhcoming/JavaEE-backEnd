@@ -85,25 +85,28 @@ public class QiNiuUtils {
         return multipartFile;
     }
 
-    public static void download(HttpServletResponse res){
-        File excelFile = new File("D:\\七牛云");
+    public static void download(String locateUrl,HttpServletResponse res){
+        Auth auth = Auth.create(accessKey, secretKey);
+        String finalUrl =auth.privateDownloadUrl(locateUrl);
+        String fileName=locateUrl.substring(36);
+        HttpUtil.downloadFile(finalUrl, FileUtil.file("D://七牛云"+fileName));
+        File file = new File("D://七牛云"+fileName);
         res.setCharacterEncoding("UTF-8");
-        String realFileName = excelFile.getName();
+        String realFileName = file.getName();
         res.setHeader("content-type", "application/octet-stream;charset=UTF-8");
         res.setContentType("application/octet-stream;charset=UTF-8");
-        //加上设置大小下载下来的.xlsx文件打开时才不会报“Excel 已完成文件级验证和修复。此工作簿的某些部分可能已被修复或丢弃”
-        res.addHeader("Content-Length", String.valueOf(excelFile.length()));
+        res.addHeader("Content-Length", String.valueOf(file.length()));
         try {
             res.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(realFileName.trim(), "UTF-8"));
         } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
+            throw new APIException(AppCode.FILE_DOWNLOAD_FAIL);
         }
         byte[] buff = new byte[1024];
         BufferedInputStream bis = null;
         OutputStream os = null;
         try {
             os = res.getOutputStream();
-            bis = new BufferedInputStream(new FileInputStream(excelFile));
+            bis = new BufferedInputStream(new FileInputStream(file));
             int i = bis.read(buff);
             while (i != -1) {
                 os.write(buff, 0, buff.length);
@@ -111,13 +114,13 @@ public class QiNiuUtils {
                 i = bis.read(buff);
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw new APIException(AppCode.FILE_DOWNLOAD_FAIL);
         }finally {
             if (bis != null) {
                 try {
                     bis.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new APIException(AppCode.FILE_DOWNLOAD_FAIL);
                 }
             }
         }

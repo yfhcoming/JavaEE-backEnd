@@ -91,10 +91,10 @@ public class AudioController {
         return audioService.audioDisplay(id);
     }
 
-    @GetMapping("/1/actions/download")
+    @GetMapping("/{audioId}/actions/download")
     @ApiOperation(value = "download by id")
-    public void audioDownload(HttpServletResponse res){
-        audioService.audioDownload(res);
+    public void audioDownload(@PathVariable("audioId") Integer userId,HttpServletResponse res){
+        audioService.audioDownload(userId, res);
     }
 
     @DeleteMapping("/{audioId}")
