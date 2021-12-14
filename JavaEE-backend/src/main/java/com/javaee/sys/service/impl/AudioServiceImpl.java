@@ -77,6 +77,9 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
             throw new APIException(AppCode.AUDIO_NOT_EXIST, "音频不存在：audioId - " + audioId);
         }
         List<BigDecimal> allScores = audioMapper.findAllScoresById(audioId);
+        if(allScores.isEmpty() || allScores == null){
+            throw new APIException(AppCode.AUDIO_HAS_NO_SCORE, "该音频没有评分：audioId - " + audioId);
+        }
         BigDecimal average = allScores.stream().map(vo -> ObjectUtils.isEmpty(vo) ? new BigDecimal(0):vo)
                 .reduce(BigDecimal.ZERO, BigDecimal::add).divide(BigDecimal.valueOf(allScores.size()), 2, BigDecimal.ROUND_HALF_UP);
         return average;

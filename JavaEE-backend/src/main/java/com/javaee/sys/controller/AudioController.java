@@ -12,6 +12,7 @@ import com.javaee.sys.vo.audio.AddCommentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,13 +43,14 @@ public class AudioController {
     AudioMapper audioMapper;
 
     @GetMapping()
-//    @Cacheable(value = RedisConfig.REDIS_KEY_DATABASE)
+
     @ApiOperation(value = "find all audios")
     public List findAllAudios() {
         return audioService.findAllAudios();
     }
 
     @GetMapping("/{audioId}")
+//    @Cacheable(value = RedisConfiguration.REDIS_KEY_DATABASE, key = "'audio:'+#audioId", unless = "#result==null")
     @ApiOperation(value = "find the audio by id")
     public AudioPo findById(@PathVariable("audioId") Integer audioId) {
         return audioService.findById(audioId);
