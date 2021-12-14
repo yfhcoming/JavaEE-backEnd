@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -127,13 +128,13 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
     }
 
     @Override
-    public MultipartFile audioDownload(Integer id){
-        if(isAudioIn(id))
-        {
-            Audio audio=audioMapper.selectById(id);
-            return download2(audio.getAudioFile());
-        }
-        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
+    public void audioDownload(HttpServletResponse res){
+//        if(isAudioIn(id))
+//        {
+//            Audio audio=audioMapper.selectById(id);
+            download(res);
+//        }
+//        else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }
 
     @Override

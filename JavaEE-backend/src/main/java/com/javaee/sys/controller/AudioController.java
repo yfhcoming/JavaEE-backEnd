@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -90,10 +91,10 @@ public class AudioController {
         return audioService.audioDisplay(id);
     }
 
-    @GetMapping("/{audioId}/actions/download")
+    @GetMapping("/1/actions/download")
     @ApiOperation(value = "download by id")
-    public MultipartFile audioDownload(@PathVariable("audioId") Integer id){
-        return audioService.audioDownload(id);
+    public void audioDownload(HttpServletResponse res){
+        audioService.audioDownload(res);
     }
 
     @DeleteMapping("/{audioId}")

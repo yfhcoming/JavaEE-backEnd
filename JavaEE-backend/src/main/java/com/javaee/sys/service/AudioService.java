@@ -7,6 +7,7 @@ import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public interface AudioService extends IService<Audio> {
 
     String audioDisplay(Integer id);
 
-    MultipartFile audioDownload(Integer id);
+    void audioDownload(HttpServletResponse res);
 
     boolean deleteAudio(Integer id);
 

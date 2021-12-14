@@ -18,6 +18,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
@@ -84,37 +85,40 @@ public class QiNiuUtils {
         return multipartFile;
     }
 
-    public static void downloadFile(File file, HttpServletResponse response) {
-        InputStream fin = null;
-        ServletOutputStream out = null;
+    public static void download(HttpServletResponse res){
+        File excelFile = new File("D:\\七牛云");
+        res.setCharacterEncoding("UTF-8");
+        String realFileName = excelFile.getName();
+        res.setHeader("content-type", "application/octet-stream;charset=UTF-8");
+        res.setContentType("application/octet-stream;charset=UTF-8");
+        //加上设置大小下载下来的.xlsx文件打开时才不会报“Excel 已完成文件级验证和修复。此工作簿的某些部分可能已被修复或丢弃”
+        res.addHeader("Content-Length", String.valueOf(excelFile.length()));
         try {
-            String fileName = file.getName();
-            String encodeName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-
-            fin = new FileInputStream(file);
-            BufferedInputStream bis = new BufferedInputStream(fin);
-            out = response.getOutputStream();
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("application/force-download");
-            response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");//设置允许跨域的key
-            response.setHeader("Content-Disposition", "attachment;filename=" + encodeName);
-
-            byte[] buffer = new byte[1024];
-            int i = bis.read(buffer);
+            res.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(realFileName.trim(), "UTF-8"));
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            os = res.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(excelFile));
+            int i = bis.read(buff);
             while (i != -1) {
-                out.write(buffer, 0, i);
-                i = bis.read(buffer);
+                os.write(buff, 0, buff.length);
+                os.flush();
+                i = bis.read(buff);
             }
-            out.flush();
-            response.flushBuffer();
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
-        } finally {
-            try {
-                if(fin != null) fin.close();
-                if(out != null) out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        }finally {
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
