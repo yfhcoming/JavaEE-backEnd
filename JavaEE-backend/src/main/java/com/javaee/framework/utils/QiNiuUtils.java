@@ -17,7 +17,11 @@ import com.qiniu.util.Auth;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 //七牛云服务
@@ -69,15 +73,50 @@ public class QiNiuUtils {
         try {
             fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new APIException(AppCode.FILE_DOWNLOAD_FAIL);
         }
         MultipartFile multipartFile = null;
         try {
              multipartFile=new MockMultipartFile("copy"+file.getName(),file.getName(),null,fileInputStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new APIException(AppCode.FILE_DOWNLOAD_FAIL);
         }
         return multipartFile;
+    }
+
+    public static void downloadFile(File file, HttpServletResponse response) {
+        InputStream fin = null;
+        ServletOutputStream out = null;
+        try {
+            String fileName = file.getName();
+            String encodeName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
+
+            fin = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fin);
+            out = response.getOutputStream();
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/force-download");
+            response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");//设置允许跨域的key
+            response.setHeader("Content-Disposition", "attachment;filename=" + encodeName);
+
+            byte[] buffer = new byte[1024];
+            int i = bis.read(buffer);
+            while (i != -1) {
+                out.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+            out.flush();
+            response.flushBuffer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(fin != null) fin.close();
+                if(out != null) out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static boolean deleteFromQN(String key){
