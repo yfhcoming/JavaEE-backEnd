@@ -46,6 +46,7 @@ public enum AppCode implements StatusCode {
     AUDIO_DELETE_FAIL(2051,"音频删除失败"),
     AUDIO_INSERT_FAIL(2052,"音频插入数据库失败"),
     FILE_DOWNLOAD_FAIL(2053,"文件下载失败"),
+    AUDIO_FILE_NOT_EXIST(2054,"音频文件资源不存在"),
     ;
 
     private int code;

@@ -84,9 +84,15 @@ spring:
       mail:
         smtp:
           auth: true
+#          ssl:
+#            trust: smtp.exmail.qq.com
+#          socketFactory:
+#            class: javax.net.ssl.SSLSocketFactory
+#            port: 465
           starttls:
             enable: true
             required: true
+    port: 465
 
 
 

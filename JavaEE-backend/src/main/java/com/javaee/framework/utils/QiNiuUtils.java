@@ -68,8 +68,8 @@ public class QiNiuUtils {
         Auth auth = Auth.create(accessKey, secretKey);
         String finalUrl =auth.privateDownloadUrl(locateUrl);
         String fileName=locateUrl.substring(36);
-        HttpUtil.downloadFile(finalUrl, FileUtil.file("D://七牛云"+fileName));
-        File file = new File("D://七牛云"+fileName);
+        HttpUtil.downloadFile(finalUrl, FileUtil.file("root//QiNiuFile"+fileName));
+        File file = new File("root//QiNiuFile"+fileName);
         FileInputStream fileInputStream = null;
         try {
             fileInputStream = new FileInputStream(file);
@@ -88,9 +88,16 @@ public class QiNiuUtils {
     public static void download(String locateUrl,HttpServletResponse res){
         Auth auth = Auth.create(accessKey, secretKey);
         String finalUrl =auth.privateDownloadUrl(locateUrl);
-        String fileName=locateUrl.substring(36);
-        HttpUtil.downloadFile(finalUrl, FileUtil.file("D://七牛云"+fileName));
-        File file = new File("D://七牛云"+fileName);
+        String fileName=locateUrl;
+        if(locateUrl.length()>36) fileName=locateUrl.substring(36);
+        File file;
+        try{
+            HttpUtil.downloadFile(finalUrl, FileUtil.file("D://七牛云"+fileName));
+            file = new File("D://七牛云"+fileName);
+        }
+        catch (Exception e){
+            throw new APIException(AppCode.FILE_DOWNLOAD_FAIL);
+        }
         res.setCharacterEncoding("UTF-8");
         String realFileName = file.getName();
         res.setHeader("content-type", "application/octet-stream;charset=UTF-8");

@@ -135,7 +135,8 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         if(isAudioIn(id))
         {
             Audio audio=audioMapper.selectById(id);
-            download(audio.getAudioFile(), res);
+            if(audio.getAudioFile()!=null) download(audio.getAudioFile(), res);
+            else throw new APIException(AppCode.AUDIO_FILE_NOT_EXIST);
         }
         else throw new APIException(AppCode.AUDIO_NOT_EXIST);
     }
@@ -170,13 +171,6 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         Audio audio=BeanConvertUtils.convertTo(addAudioVo,Audio::new);
         audio.setAudioFile(url1);
         audio.setCover(url2);
-//        audio.setAudioName(addAudioVo.getName());
-//        audio.setAudioFile(url1);
-//        audio.setCover(url2);
-//        audio.setUserId(addAudioVo.getId());
-//        audio.setDes(addAudioVo.getDescription());
-//        audio.setLng(addAudioVo.getLng());
-//        audio.setLat(addAudioVo.getLat());
         try
         {
             audioMapper.insert(audio);

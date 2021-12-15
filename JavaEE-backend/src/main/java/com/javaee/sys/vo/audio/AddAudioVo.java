@@ -23,7 +23,7 @@ public class AddAudioVo {
     @NotNull(message = "封面不允许为空！")
     private MultipartFile cover;
 
-    private String description;
+    private String des;
 
     private BigDecimal lng;
 
