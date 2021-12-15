@@ -72,7 +72,7 @@ spring:
   mail:
     host: smtp.qq.com
     #服务协议
-    protocol: smtp
+    protocol: smtps
     # 编码集
     default-encoding: UTF-8
     #发送邮件的账户
@@ -84,7 +84,8 @@ spring:
       mail:
         smtp:
           auth: true
-#          ssl:
+          ssl:
+            enable: true
 #            trust: smtp.exmail.qq.com
 #          socketFactory:
 #            class: javax.net.ssl.SSLSocketFactory
