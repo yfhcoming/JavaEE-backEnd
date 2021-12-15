@@ -157,22 +157,26 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
         String url1,url2;
         try {
             InputStream fileInputStream= addAudioVo.getAudio().getInputStream();
-            url1= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
+            url1= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getAudioName());
         } catch (IOException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
         try {
             InputStream fileInputStream= addAudioVo.getCover().getInputStream();
-            url2= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getName());
+            url2= QiNiuUtils.upLoad(fileInputStream, addAudioVo.getAudioName());
         } catch (IOException e) {
             throw new APIException(AppCode.FILE_UPLOAD_FAIL);
         }
-        Audio audio=new Audio();
-        audio.setAudioName(addAudioVo.getName());
+        Audio audio=BeanConvertUtils.convertTo(addAudioVo,Audio::new);
         audio.setAudioFile(url1);
         audio.setCover(url2);
-        audio.setUserId(addAudioVo.getId());
-        audio.setDes(addAudioVo.getDescription());
+//        audio.setAudioName(addAudioVo.getName());
+//        audio.setAudioFile(url1);
+//        audio.setCover(url2);
+//        audio.setUserId(addAudioVo.getId());
+//        audio.setDes(addAudioVo.getDescription());
+//        audio.setLng(addAudioVo.getLng());
+//        audio.setLat(addAudioVo.getLat());
         try
         {
             audioMapper.insert(audio);

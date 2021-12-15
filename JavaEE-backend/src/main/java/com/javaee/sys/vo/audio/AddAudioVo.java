@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 public class AddAudioVo {
 
     @NotNull(message = "用户ID不允许为空！")
-    private Integer id;
+    private Integer userId;
 
     @NotEmpty(message = "音频名称不允许为空！")
-    private String name;
+    private String audioName;
 
     @NotNull(message = "音频不允许为空！")
     private MultipartFile audio;
