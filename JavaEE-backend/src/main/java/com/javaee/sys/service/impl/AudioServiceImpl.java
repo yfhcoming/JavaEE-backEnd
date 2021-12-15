@@ -17,9 +17,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.javaee.sys.service.CommentService;
 import com.javaee.sys.service.UserService;
 import com.javaee.sys.vo.audio.AddAudioVo;
+import com.javaee.sys.vo.audio.AudioLocateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -193,5 +193,11 @@ public class AudioServiceImpl extends ServiceImpl<AudioMapper, Audio> implements
             else return audioList;
         }
         else throw new APIException(AppCode.USER_NOT_EXIST);
+    }
+
+    @Override
+    public List getAudioLocation(){
+        List<Audio> audioList=audioMapper.selectList(null);
+        return BeanConvertUtils.convertListTo(audioList,AudioLocateVo::new);
     }
 }

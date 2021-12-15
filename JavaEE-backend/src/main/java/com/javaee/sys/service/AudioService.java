@@ -45,4 +45,6 @@ public interface AudioService extends IService<Audio> {
     Integer uploadAudio(AddAudioVo addAudioVo);
 
     List findByUserId(Integer userId);
+
+    List getAudioLocation();
 }

@@ -43,6 +43,10 @@ public class Audio implements Serializable {
 
     private String cover;
 
+    private BigDecimal lng;
+
+    private BigDecimal lat;
+
     /**
      * 创建时间
      */

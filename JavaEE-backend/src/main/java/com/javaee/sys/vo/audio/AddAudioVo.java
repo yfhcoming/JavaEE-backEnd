@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 public class AddAudioVo {
@@ -23,4 +24,8 @@ public class AddAudioVo {
     private MultipartFile cover;
 
     private String description;
+
+    private BigDecimal lng;
+
+    private BigDecimal lat;
 }

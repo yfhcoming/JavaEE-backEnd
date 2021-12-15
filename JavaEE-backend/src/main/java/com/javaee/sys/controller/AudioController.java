@@ -9,6 +9,7 @@ import com.javaee.sys.po.AudioPo;
 import com.javaee.sys.service.AudioService;
 import com.javaee.sys.vo.audio.AddAudioVo;
 import com.javaee.sys.vo.audio.AddCommentVo;
+import com.javaee.sys.vo.audio.AudioLocateVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,4 +113,9 @@ public class AudioController {
         return audioService.uploadAudio(addAudioVo);
     }
 
+    @GetMapping("location")
+    @ApiOperation(value = "get all audios location")
+    public List getAudioLocation(){
+        return audioService.getAudioLocation();
+    }
 }
