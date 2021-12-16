@@ -1,6 +1,5 @@
 package com.javaee.sys.dto;
 
-import com.alibaba.fastjson.JSON;
 import com.javaee.framework.utils.BeanConvertUtils;
 import com.javaee.sys.entity.Comment;
 import com.javaee.sys.vo.audio.AddCommentVo;

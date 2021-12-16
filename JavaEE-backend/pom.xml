@@ -19,17 +19,32 @@
         <java.version>1.8</java.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <freemarker-version>2.3.30</freemarker-version>
-        <druid-version>RELEASE</druid-version>
         <fastjson-version>RELEASE</fastjson-version>
         <jedis-version>3.1.0</jedis-version>
         <knife4j.version>2.0.2</knife4j.version>
+        <log4j2.version>2.15.0</log4j2.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
 
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
@@ -43,11 +58,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson-version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>fastjson</artifactId>-->
+        <!--            <version>${fastjson-version}</version>-->
+        <!--        </dependency>-->
 
         <!-- mybatis-plus -->
         <dependency>
@@ -75,11 +90,11 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid-version}</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--            <version>${druid-version}</version>-->
+        <!--        </dependency>-->
 
         <!-- lombok -->
         <dependency>
@@ -180,35 +195,52 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.1.0</version>
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
-                    <imageName>mall-tiny/${project.artifactId}:${project.version}</imageName>
-                    <dockerHost>http://47.102.106.228:2375</dockerHost>
-                    <baseImage>java:8</baseImage>
-                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]
-                    </entryPoint>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.apache.logging.log4j</groupId>
+                            <artifactId>log4j-api</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apache.logging.log4j</groupId>
+                            <artifactId>log4j-core</artifactId>
+                        </exclude>
+                        <exclude>
+                            <groupId>org.apache.logging.log4j</groupId>
+                            <artifactId>log4j-to-slf4j</artifactId>
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
+
+            <!--            <plugin>-->
+            <!--                <groupId>com.spotify</groupId>-->
+            <!--                <artifactId>docker-maven-plugin</artifactId>-->
+            <!--                <version>1.1.0</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>build-image</id>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>build</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--                <configuration>-->
+            <!--                    <imageName>javaee/${project.artifactId}:${project.version}</imageName>-->
+            <!--                    <dockerHost>http://101.132.43.76:2375</dockerHost>-->
+            <!--                    <baseImage>java:8</baseImage>-->
+            <!--                    <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]-->
+            <!--                    </entryPoint>-->
+            <!--                    <resources>-->
+            <!--                        <resource>-->
+            <!--                            <targetPath>/</targetPath>-->
+            <!--                            <directory>${project.build.directory}</directory>-->
+            <!--                            <include>${project.build.finalName}.jar</include>-->
+            <!--                        </resource>-->
+            <!--                    </resources>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
 
         </plugins>
     </build>
