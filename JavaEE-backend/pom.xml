@@ -23,6 +23,7 @@
         <jedis-version>3.1.0</jedis-version>
         <knife4j.version>2.0.2</knife4j.version>
         <log4j2.version>2.15.0</log4j2.version>
+        <druid-version>RELEASE</druid-version>
     </properties>
 
     <dependencies>
@@ -58,11 +59,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba</groupId>-->
-        <!--            <artifactId>fastjson</artifactId>-->
-        <!--            <version>${fastjson-version}</version>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>fastjson</artifactId>
+                    <version>${fastjson-version}</version>
+                </dependency>
 
         <!-- mybatis-plus -->
         <dependency>
@@ -90,11 +91,11 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.alibaba</groupId>-->
-        <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-        <!--            <version>${druid-version}</version>-->
-        <!--        </dependency>-->
+                <dependency>
+                    <groupId>com.alibaba</groupId>
+                    <artifactId>druid-spring-boot-starter</artifactId>
+                    <version>${druid-version}</version>
+                </dependency>
 
         <!-- lombok -->
         <dependency>
