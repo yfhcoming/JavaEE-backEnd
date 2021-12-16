@@ -29,11 +29,11 @@ public interface CollectionMapper extends BaseMapper<Collection> {
                     @Result(property = "collectionCover", column = "cover"),
                     @Result(property = "createTime", column = "create_time"),
             })
-    @Select("select C.collection_id,C.collection_name,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id where C.collection_id=#{collectionId}")
+    @Select("select C.collection_id,C.collection_name,C.cover,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id where C.collection_id=#{collectionId}")
     CollectionPo findById(@Param("collectionId") Integer collectionId);
 
     @ResultMap(value = "findById")
-    @Select("select C.collection_id,C.collection_name,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id")
+    @Select("select C.collection_id,C.collection_name,C.cover,U.user_name,C.create_time from collection as C left join user as U on C.user_id =U.user_id")
     List<CollectionPo> findAllCollections();
 
     @ResultMap(value = "findById")

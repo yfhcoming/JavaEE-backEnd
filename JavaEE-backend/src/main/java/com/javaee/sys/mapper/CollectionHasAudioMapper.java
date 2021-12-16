@@ -27,10 +27,11 @@ public interface CollectionHasAudioMapper extends BaseMapper<CollectionHasAudio>
                     @Result(property = "audio_name", column = "audioName"),
                     @Result(property = "score", column = "score"),
                     @Result(property = "des", column = "des"),
+                    @Result(property = "cover", column = "cover"),
                     @Result(property = "create_time", column = "createTime"),
                     @Result(property = "update_time", column = "updateTime"),
             })
-    @Select("select audio_id,audio_name,score,des,create_time,update_time from collection_has_audio_view where collection_id=#{collectionId} order by audio_id")
+    @Select("select audio_id,audio_name,score,des,cover,create_time,update_time from collection_has_audio_view where collection_id=#{collectionId} order by audio_id")
     List<AudioPo> findAllAudiosById(@Param("collectionId")Integer collectionId);
 
 }
