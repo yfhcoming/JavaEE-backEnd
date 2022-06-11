@@ -28,7 +28,7 @@ import java.util.Random;
 //七牛云服务
 public class QiNiuUtils {
     //域名
-    private final static String domain="http://rdasomrxv.hd-bkt.clouddn.com";
+    private final static String domain="rdasomrxv.hd-bkt.clouddn.com";
     //ACCESS_KEY
     private final static String accessKey="JKsvZe_TrSWoLzX132wDflMbfpFsXRoj3YzCyEhB";
     //SECRET_KEY
