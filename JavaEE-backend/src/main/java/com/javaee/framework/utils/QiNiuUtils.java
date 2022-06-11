@@ -28,13 +28,13 @@ import java.util.Random;
 //七牛云服务
 public class QiNiuUtils {
     //域名
-    private final static String domain="http://r3tw40sg8.hd-bkt.clouddn.com";
+    private final static String domain="http://rdarg3u5g.hn-bkt.clouddn.com";
     //ACCESS_KEY
-    private final static String accessKey="bu4Sb-1O5TI0JgmqbJMKPXPTKvfPmWKQVpLVB5ZI";
+    private final static String accessKey="JKsvZe_TrSWoLzX132wDflMbfpFsXRoj3YzCyEhB";
     //SECRET_KEY
-    private final static String secretKey="_I0aTnFMMGpWv8Z9v4sDKpp4hb7_GzdY0XZ7Nrjs";
+    private final static String secretKey="dbmy0KdmAYyvTL8EE2_X9frlDrfqhr0mhauBjPzj";
     //空间名
-    private final static String bucketName="javaee-audio";
+    private final static String bucketName="sound-wave";
 
     /**
      * 上传文件

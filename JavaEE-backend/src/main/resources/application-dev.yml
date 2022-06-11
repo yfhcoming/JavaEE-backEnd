@@ -20,9 +20,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.132.43.76:3306/javaee?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: javaee
-    password: javaee
+    url: jdbc:mysql://101.132.43.76:3306/soundwave?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: soundwave
+    password: soundwave
 
 
     type: com.alibaba.druid.pool.DruidDataSource
