@@ -30,7 +30,6 @@ public class Audio implements Serializable {
     @TableId(value = "audio_id", type = IdType.AUTO)
     private Integer audioId;
 
-
     private String audioName;
 
     private BigDecimal score;
