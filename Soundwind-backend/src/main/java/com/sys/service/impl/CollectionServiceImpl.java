@@ -1,0 +1,113 @@
+package com.sys.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import com.framework.enums.AppCode;
+import com.framework.exception.APIException;
+import com.framework.utils.BeanConvertUtils;
+import com.framework.utils.QiNiuUtils;
+import com.sys.entity.Collection;
+import com.sys.mapper.CollectionMapper;
+import com.sys.po.CollectionHeatPo;
+import com.sys.po.CollectionPo;
+import com.sys.service.CollectionService;
+import com.sys.service.UserService;
+import com.sys.vo.collection.CollectionAddVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+
+@Service
+public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collection> implements CollectionService {
+
+    @Autowired
+    CollectionMapper collectionMapper;
+
+    @Autowired
+    UserService userService;
+
+    public boolean isCollectionIn(Integer collectionId){
+        LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Collection::getCollectionId, collectionId);
+        Integer integer = collectionMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
+    }
+
+    public CollectionPo findById(Integer collectionId){
+        if(!isCollectionIn(collectionId)){
+            throw new APIException(AppCode.COLLECTION_NOT_EXIST, "收藏夹不存在：collectionId - " + collectionId);
+        }
+        CollectionPo collectionPo = collectionMapper.findById(collectionId);
+        return collectionPo;
+    }
+
+    public boolean isUserHasCollectionIn(CollectionAddVo dto)
+    {
+        LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Collection::getUserId, dto.getUserId())
+                .eq(Collection::getCollectionName,dto.getCollectionName());
+        Integer integer = collectionMapper.selectCount(wrapper);
+        boolean result = (integer == 0)?false:true;
+        return result;
+    }
+
+
+
+    public boolean addCollection(@Validated CollectionAddVo dto){
+        if(!userService.isUserIn(dto.getUserId())){
+            throw new APIException(AppCode.USER_NOT_EXIST, "用户不存在：userId - " + dto.getUserId());
+        }
+        if(this.isUserHasCollectionIn(dto)){
+            throw new APIException(AppCode.USER_HAS_COLLECTION_HAS_IN, "用户已有该收藏夹：userId - " + dto.getUserId()
+                    +", collectionName - " + dto.getCollectionName());
+        }
+        String cover;
+        try {
+            InputStream fileInputStream= dto.getMultipartFile().getInputStream();
+            cover= QiNiuUtils.upLoad(fileInputStream, dto.getMultipartFile().getName());
+        } catch (IOException e) {
+            throw new APIException(AppCode.FILE_UPLOAD_FAIL);
+        }
+        Collection collection = BeanConvertUtils.convertTo(dto, Collection::new);
+        collection.setCover(cover);
+        save(collection);
+        return true;
+    }
+
+    public List findAllCollections(){
+        List<CollectionPo> allCollections = collectionMapper.findAllCollections();
+        return allCollections;
+    }
+
+    public List findAllSortedByTime(){
+        List<CollectionPo> allSortedByTime = collectionMapper.findAllSortedByTime();
+        return allSortedByTime;
+    }
+
+    public List findAllOrderByHeat(){
+        List<CollectionHeatPo> allOrderByHeat = collectionMapper.findAllOrderByHeat();
+        return allOrderByHeat;
+    }
+
+
+    public List findByUserId(Integer userId){
+        if(userService.isUserIn(userId))
+        {
+            LambdaQueryWrapper<Collection> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(Collection::getUserId,userId);
+            List<Collection> collectionList=collectionMapper.selectList(wrapper);
+            if(collectionList==null) throw new APIException(AppCode.USER_HAS_NO_COLLECTION);
+            else return collectionList;
+        }
+        else throw new APIException(AppCode.USER_NOT_EXIST);
+    }
+
+
+}

@@ -1,0 +1,84 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<configuration debug="true">-->
+
+
+<!--    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{50} - %msg%n"/>-->
+
+<!--    <property name="LOG_HOME" value="./log"/>-->
+
+
+<!--    &lt;!&ndash;输出到控制台&ndash;&gt;-->
+<!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+<!--            &lt;!&ndash;<charset>utf8</charset>&ndash;&gt;-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+
+<!--    &lt;!&ndash;info 级别的日志&ndash;&gt;-->
+<!--    &lt;!&ndash; 按照每天生成日志文件 &ndash;&gt;-->
+<!--    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>INFO</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--        <encoder>-->
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+<!--        </encoder>-->
+<!--        <file>${LOG_HOME}/info.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            &lt;!&ndash;日志文件输出的文件名&ndash;&gt;-->
+<!--            <fileNamePattern>${LOG_HOME}/achiveLog/info-%d{yyyy-MM-dd}_%i.log</fileNamePattern>-->
+<!--            <maxFileSize>50MB</maxFileSize>-->
+<!--            &lt;!&ndash;日志文件保留天数&ndash;&gt;-->
+<!--            <MaxHistory>180</MaxHistory>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
+
+
+<!--    &lt;!&ndash;WARN 级别的日志&ndash;&gt;-->
+<!--    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>WARN</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--        <encoder>-->
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+<!--        </encoder>-->
+<!--        <file>${LOG_HOME}/warn.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${LOG_HOME}/achiveLog/warn-%d{yyyy-MM-dd}_%i.log</fileNamePattern>-->
+<!--            <maxFileSize>50MB</maxFileSize>-->
+<!--            <MaxHistory>180</MaxHistory>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
+
+<!--    &lt;!&ndash;ERROR 级别的日志&ndash;&gt;-->
+<!--    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>ERROR</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--        <encoder>-->
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+<!--        </encoder>-->
+<!--        <file>${LOG_HOME}/error.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${LOG_HOME}/achiveLog/error-%d{yyyy-MM-dd}_%i.log</fileNamePattern>-->
+<!--            <maxFileSize>50MB</maxFileSize>-->
+<!--            <MaxHistory>180</MaxHistory>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
+
+<!--    &lt;!&ndash; 日志输出级别 &ndash;&gt;-->
+<!--    <root level="INFO">-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--        <appender-ref ref="INFO"/>-->
+<!--        <appender-ref ref="WARN"/>-->
+<!--        <appender-ref ref="ERROR"/>-->
+<!--    </root>-->
+<!--</configuration>-->
